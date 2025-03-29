@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "W3C AI 助手",
+    "version": "1.0",
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": ["https://www.w3.org/TR/*", "http://localhost:11434/*", "http://127.0.0.1:11434/*"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://www.w3.org/TR/*"],
+            "js": ["content.js"]
+        }
+    ]
+}
