@@ -1,38 +1,80 @@
-let extractedContent = ""; // 存儲 W3C 內容
+let extractedContent = "";
+const GEMINI_API_KEY = "AIzaSyA0HMdHi6ceZSvb7f60weMqEDu8easuui0";
+const GEMINI_MODEL = 'gemini-1.5-flash-latest';
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log("Background received message:", request.action);
+
+    // --- 處理文本提取 ---
     if (request.action === "extractText") {
-        extractedContent = request.content; // 更新存儲的標準內容
+        extractedContent = request.content;
         console.log("✅ 已存儲 W3C 內容，字數:", extractedContent.length);
-        sendResponse({ status: "success" });
+        sendResponse({ status: "success", message: "內容提取成功。" });
+        return false;
     }
-    if (request.action === "queryOllama") {
+
+    // --- 處理 Gemini 查詢 ---
+    if (request.action === "queryGemini") {
         if (!extractedContent) {
-            sendResponse({ response: "❌ 尚未擷取標準內容，請先載入 W3C 頁面" });
-            return;
+            sendResponse({ status: "no_content", message: "請先從 W3C 頁面提取內容。" });
+            return false;
+        }
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
+            sendResponse({ status: "error", response: "缺少 Gemini API 金鑰。" });
+            return false;
         }
 
-        console.log("📡 正在向 Ollama 發送請求...", request.question);
-        fetch("http://localhost:11434/api/generate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                model: "llama3",
-                prompt: `這是一份 W3C 標準文件的一部分，請根據這些內容回答問題。\n\n標準內容:\n${extractedContent}\n\n使用者問題: ${request.question}`,
-                stream: false
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("✅ API 回應:", data);
-                sendResponse({ response: data.response || "AI 沒有回應" });
-            })
-            .catch(error => {
-                console.error("❌ Ollama 錯誤:", error);
-                sendResponse({ response: "AI 連線失敗" });
-            });
+        console.log("📡 正在向 Gemini API 發送請求...", request.question);
+        const prompt = `請根據以下 W3C 標準文件的內容，回答使用者的問題。如果適合，請使用 Markdown 格式來組織你的回答。
 
-        return true; // 讓 sendResponse 可用於異步回應
+                        標準內容:
+                        ---
+                        ${extractedContent}
+                        ---
+
+                        使用者問題: ${request.question}
+
+                        回答:`;
+
+        const requestBody = { contents: [{ parts: [{ text: prompt }] }] };
+
+        fetch(GEMINI_API_URL, {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify(requestBody)
+        })
+        .then(async response => {
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                const errorMessage = errorData?.error?.message || response.statusText;
+                throw new Error(`API 錯誤 ${response.status}: ${errorMessage}`);
+            }
+            return response.json();
+         })
+        .then(data => {
+             let aiResponse = "AI 未提供有效回應。";
+             if (data?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                 aiResponse = data.candidates[0].content.parts[0].text;
+             } else if (data?.promptFeedback?.blockReason) {
+                 aiResponse = `請求被 API 阻止：${data.promptFeedback.blockReason}`;
+                 console.warn("Gemini 請求被阻止:", data.promptFeedback);
+             }
+             console.log("✅ Gemini API 回應原始文本:", aiResponse);
+             // ** 直接返回成功狀態和原始文本 **
+             sendResponse({ status: "success", response: aiResponse });
+
+         })
+        .catch(error => {
+            console.error("❌ Gemini API Fetch/處理錯誤:", error);
+            sendResponse({ status: "error", response: `AI 連線失敗: ${error.message}` });
+        });
+
+        return true; // 異步響應
     }
 
+    // ** 移除 renderMarkdown 處理邏輯 **
+
 });
+
+console.log("🏁 Background script loaded.");

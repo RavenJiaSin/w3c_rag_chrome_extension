@@ -2,22 +2,38 @@
     "manifest_version": 3,
     "name": "W3C AI 助手",
     "version": "1.0",
+    "description": "提取W3C標準內容，並使用Chat AI回答相關問題。",
     "permissions": [
-        "tabs",
+        "storage",
         "activeTab",
         "scripting"
     ],
-    "host_permissions": ["https://www.w3.org/TR/*", "http://localhost:11434/*", "http://127.0.0.1:11434/*"],
+    "host_permissions": [
+        "https://www.w3.org/TR/*",
+        "https://generativelanguage.googleapis.com/" 
+    ],
     "background": {
         "service_worker": "background.js"
     },
     "action": {
-        "default_popup": "popup.html"
+        "default_title": "W3C AI 助手"
     },
     "content_scripts": [
         {
-            "matches": ["*://www.w3.org/TR/*"],
-            "js": ["content.js"]
+            "matches": ["https://www.w3.org/TR/*"],
+            "js": ["content.js"],
+            "run_at": "document_idle"
         }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+            "sidebar.html",
+            "sidebar.js",
+            "marked.min.js",
+            "purify.min.js"
+        ],
+        "matches": ["<all_urls>"]
+      }
     ]
 }

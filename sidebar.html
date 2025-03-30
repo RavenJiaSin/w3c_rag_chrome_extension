@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 助手側邊欄</title>
+    <!-- 可以鏈接 sidebar.css -->
+    <!-- <link rel="stylesheet" href="sidebar.css"> -->
+    <style>
+        /* 將之前的 CSS 樣式放在這裡 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin: 0; /* iframe body 默認可能有 margin */
+            height: 100vh; /* 嘗試讓 body 佔滿 iframe 高度 */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column; /* 垂直佈局 */
+        }
+        h2 {
+             margin-top: 0;
+             margin-bottom: 15px;
+             font-size: 1.2em;
+             color: #111;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            height: 60px;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            flex-shrink: 0; /* 防止文本域被壓縮 */
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+            flex-shrink: 0; /* 防止按鈕被壓縮 */
+        }
+        button:hover:not(:disabled) {
+             background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #response {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            overflow-wrap: break-word;
+            line-height: 1.6;
+            flex-grow: 1; /* 讓回應區域填充剩餘空間 */
+            overflow-y: auto; /* 如果回應內容太長，內部滾動 */
+        }
+        /* --- Markdown 元素樣式 --- */
+        #response h1, #response h2, #response h3, #response h4, #response h5, #response h6 {
+            margin-top: 1.2em; margin-bottom: 0.6em; line-height: 1.3; font-weight: 600; color: #111;
+        }
+        #response h1 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        #response h2 { font-size: 1.3em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        #response h3 { font-size: 1.15em; }
+        #response h4 { font-size: 1.0em; }
+        #response p { margin-bottom: 1em; }
+        #response ul, #response ol { margin-left: 25px; margin-bottom: 1em; padding-left: 0; }
+        #response li { margin-bottom: 0.4em; }
+        #response code { background-color: #f0f0f0; padding: 0.2em 0.4em; border-radius: 3px; font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; font-size: 0.9em; color: #c7254e; }
+        #response pre { background-color: #f5f5f5; border: 1px solid #ddd; padding: 12px; border-radius: 4px; overflow-x: auto; margin-bottom: 1em; line-height: 1.4; }
+        #response pre code { background-color: transparent; padding: 0; border: none; color: inherit; font-size: inherit; }
+        #response blockquote { border-left: 4px solid #007bff; margin-left: 0; padding: 10px 15px; color: #555; background-color: #f9f9f9; margin-bottom: 1em; }
+        #response blockquote p:last-child { margin-bottom: 0; }
+        #response a { color: #007bff; text-decoration: none; }
+        #response a:hover { text-decoration: underline; }
+        #response table { border-collapse: collapse; margin-bottom: 1em; width: 100%; border: 1px solid #ccc; }
+        #response th, #response td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        #response th { background-color: #f8f8f8; font-weight: bold; }
+        #response hr { border: 0; height: 1px; background-color: #eee; margin: 1.5em 0; }
+    </style>
+</head>
+<body>
+    <h2>W3C AI 助手</h2>
+    <textarea id="sidebar-question-input" placeholder="請輸入您關於本頁內容的問題..."></textarea>
+    <button id="sidebar-send-button">詢問 AI</button>
+    <div id="sidebar-response"></div>
+
+    <!-- ** 靜態引入庫和側邊欄腳本 ** -->
+    <!-- 確保文件名正確 -->
+    <script src="purify.min.js"></script>
+    <script src="marked.min.js"></script>
+    <script src="sidebar.js"></script>
+</body>
+</html>
