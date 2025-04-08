@@ -40,7 +40,7 @@
         button.id = 'w3c-ai-toggle-button';
         button.textContent = '⇔'; // 可改成 ▶/◀ 或 AI
         button.title = 'Toggle Assistant';
-        
+
         // 設定樣式
         Object.assign(button.style, {
             position: 'fixed',
@@ -73,41 +73,41 @@
 
     // --- 文本提取 (保持不變) ---
     function extractTextAndSend() {
-       let w3cContent = "";
-       let contentArray = [];
+        let w3cContent = "";
+        let contentArray = [];
         let mainContent = document.querySelector('#main') || document.querySelector('#content') || document.body;
         const elements = mainContent.querySelectorAll('p, div:not(div div)');
         elements.forEach(node => {
-             // ** 確保排除 iframe **
-             if (node.closest('nav, header, footer, .toc, #toc, #w3c-ai-assistant-iframe')) {
-                 return;
-             }
-             let text = node.innerText?.trim();
-             if (text) {
-                 contentArray.push(text);
-             }
-         });
+            // ** 確保排除 iframe **
+            if (node.closest('nav, header, footer, .toc, #toc, #w3c-ai-assistant-iframe')) {
+                return;
+            }
+            let text = node.innerText?.trim();
+            if (text) {
+                contentArray.push(text);
+            }
+        });
         w3cContent = contentArray.join("\n\n");
 
         if (w3cContent.length > 0) {
-             // console.log("✅ 成功擷取內容，長度:", w3cContent.length);
-             chrome.runtime.sendMessage({ action: "extractText", content: w3cContent }, response => {
-                 if (chrome.runtime.lastError) {
-                     console.error("發送內容到 background 失敗:", chrome.runtime.lastError.message);
-                 } else {
-                     // console.log("💬 內容已發送至 background:", response?.status);
-                 }
-             });
-         } else {
-             console.warn("❌ 未能提取到頁面內容");
-         }
+            // console.log("✅ 成功擷取內容，長度:", w3cContent.length);
+            chrome.runtime.sendMessage({ action: "extractText", content: w3cContent }, response => {
+                if (chrome.runtime.lastError) {
+                    console.error("發送內容到 background 失敗:", chrome.runtime.lastError.message);
+                } else {
+                    // console.log("💬 內容已發送至 background:", response?.status);
+                }
+            });
+        } else {
+            console.warn("❌ 未能提取到頁面內容");
+        }
     }
 
     // --- 向 iframe 發送消息 ---
     function sendMessageToIframe(type, payload) {
         if (iframe && iframe.contentWindow && iframeReady) {
-             // 使用 iframe 的 contentWindow 發送消息
-             // '*' 為了簡單，生產環境應指定 iframe 的源 (chrome.runtime.getURL('/') 開頭)
+            // 使用 iframe 的 contentWindow 發送消息
+            // '*' 為了簡單，生產環境應指定 iframe 的源 (chrome.runtime.getURL('/') 開頭)
             iframe.contentWindow.postMessage({ source: 'content-script-ai-assistant', type: type, payload: payload }, '*');
         } else {
             console.warn("Attempted to send message to iframe, but it's not ready or not found.");
@@ -125,40 +125,40 @@
         const message = event.data;
         console.log("Content Script: Received message from iframe:", message);
 
-        switch(message.type) {
+        switch (message.type) {
             case 'queryAI':
                 // iframe 請求查詢 AI
                 const question = message.payload.question;
                 console.log("Content Script: Forwarding query to background:", question);
                 // **向 background 發送查詢請求**
                 chrome.runtime.sendMessage({ action: "queryGemini", question: question }, (response) => {
-                     if (chrome.runtime.lastError) {
-                         console.error("Content Script: Error communicating with background:", chrome.runtime.lastError.message);
-                         // **將錯誤信息發回給 iframe**
-                         sendMessageToIframe('aiError', { status: 'error', response: `通訊錯誤: ${chrome.runtime.lastError.message}` });
-                         return;
-                     }
+                    if (chrome.runtime.lastError) {
+                        console.error("Content Script: Error communicating with background:", chrome.runtime.lastError.message);
+                        // **將錯誤信息發回給 iframe**
+                        sendMessageToIframe('aiError', { status: 'error', response: `通訊錯誤: ${chrome.runtime.lastError.message}` });
+                        return;
+                    }
 
-                     if (response) {
+                    if (response) {
                         // **將 background 的回應轉發給 iframe**
                         console.log("Content Script: Received response from background, forwarding to iframe:", response);
                         // 發送完整的響應對象，讓 iframe 根據 status 處理
-                         if (response.status === 'success') {
+                        if (response.status === 'success') {
                             sendMessageToIframe('aiResponse', { status: response.status, response: response.response });
-                         } else if (response.status === 'no_content') {
-                             sendMessageToIframe('noContent', { status: response.status, message: response.message });
-                         } else if (response.status === 'error') {
-                             sendMessageToIframe('aiError', { status: response.status, response: response.response });
-                         } else {
-                             // 其他未知狀態
-                             sendMessageToIframe('unknownStatus', { status: response.status, payload: response });
-                         }
+                        } else if (response.status === 'no_content') {
+                            sendMessageToIframe('noContent', { status: response.status, message: response.message });
+                        } else if (response.status === 'error') {
+                            sendMessageToIframe('aiError', { status: response.status, response: response.response });
+                        } else {
+                            // 其他未知狀態
+                            sendMessageToIframe('unknownStatus', { status: response.status, payload: response });
+                        }
 
-                     } else {
-                         console.error("Content Script: Received invalid response from background.");
-                          sendMessageToIframe('aiError', { status: 'error', response: '收到來自背景的無效回應' });
-                     }
-                 });
+                    } else {
+                        console.error("Content Script: Received invalid response from background.");
+                        sendMessageToIframe('aiError', { status: 'error', response: '收到來自背景的無效回應' });
+                    }
+                });
                 break;
             case 'iframeReady':
                 // iframe 發送消息表示它已加載完成
