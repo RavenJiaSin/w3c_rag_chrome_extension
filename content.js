@@ -30,6 +30,47 @@
         console.log("✅ AI Assistant iframe injected.");
     }
 
+    // --- 注入控制按鈕 ---
+    function injectToggleButton() {
+        if (document.getElementById('w3c-ai-toggle-button')) {
+            return; // 防止重複注入
+        }
+
+        const button = document.createElement('button');
+        button.id = 'w3c-ai-toggle-button';
+        button.textContent = '⇔'; // 可改成 ▶/◀ 或 AI
+        button.title = 'Toggle Assistant';
+        
+        // 設定樣式
+        Object.assign(button.style, {
+            position: 'fixed',
+            right: '20px',
+            bottom: '20px',
+            zIndex: '10000',
+            width: '40px',
+            height: '40px',
+            borderRadius: '20px',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            fontSize: '18px',
+            border: 'none',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+        });
+
+        // 點擊切換 iframe 顯示
+        button.addEventListener('click', () => {
+            const iframe = document.getElementById('w3c-ai-assistant-iframe');
+            if (!iframe) return;
+            const visible = iframe.style.display !== 'none';
+            iframe.style.display = visible ? 'none' : 'block';
+            button.textContent = visible ? '⇔' : '×'; // 可自行調整圖示
+        });
+
+        document.body.appendChild(button);
+        console.log("✅ Toggle button injected.");
+    }
+
     // --- 文本提取 (保持不變) ---
     function extractTextAndSend() {
        let w3cContent = "";
@@ -133,6 +174,7 @@
     // --- 初始化 ---
     function initialize() {
         injectAssistantIframe(); // 注入 iframe
+        injectToggleButton();    // 注入 toggle 按鈕
         extractTextAndSend();    // 提取文本
     }
 
