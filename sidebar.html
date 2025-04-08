@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 助手側邊欄</title>
-    <link rel="stylesheet" href="sidebar.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>W3C AI Assistant</title>
+    <link rel="stylesheet" href="sidebar.css" />
 </head>
 <body>
-    <h2>W3C AI 助手</h2>
-    <textarea id="sidebar-question-input" placeholder="請輸入您關於本頁內容的問題..."></textarea>
-    <button id="sidebar-send-button">詢問 AI</button>
-    <div id="sidebar-response"></div>
+    <h2>W3C AI Assistant</h2>
 
-    <!-- ** 靜態引入庫和側邊欄腳本 ** -->
-    <!-- 確保文件名正確 -->
+    <div id="chat-container"></div>
+
+    <div id="input-area">
+        <textarea id="user-input" placeholder="Ask a question..."></textarea>
+        <button id="send-button">Send</button>
+    </div>
     <script src="purify.min.js"></script>
     <script src="marked.min.js"></script>
     <script src="sidebar.js"></script>
