@@ -3,24 +3,14 @@
     "name": "W3C AI 助手",
     "version": "1.0",
     "description": "提取W3C標準內容，並使用Chat AI回答相關問題。",
-    "content_security_policy": {
-        "script-src": [
-        "'self'",
-        "'unsafe-eval'",
-        "https://use.fontawesome.com"
-        ],
-        "object-src": ["'self'"]
-    },
     "permissions": [
         "storage",
         "activeTab",
-        "scripting",
-        "tabs"
+        "scripting"
     ],
     "host_permissions": [
         "https://www.w3.org/TR/*",
-        "https://generativelanguage.googleapis.com/",
-        "https://use.fontawesome.com/*"
+        "https://generativelanguage.googleapis.com/" 
     ],
     "background": {
         "service_worker": "background.js"
@@ -41,10 +31,7 @@
             "sidebar.html",
             "sidebar.js",
             "marked.min.js",
-            "purify.min.js",
-            "botui.min.js",
-            "vue.min.js",
-            "botui.min.css"
+            "purify.min.js"
         ],
         "matches": ["<all_urls>"]
       }

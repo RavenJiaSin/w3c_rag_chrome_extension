@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 助手側邊欄</title>
-    <link rel="stylesheet" href="botui.min.css">
+    <link rel="stylesheet" href="sidebar.css">
 </head>
 <body>
-    <div id="botui-app">
-        <bot-ui></bot-ui>
-    </div>
+    <h2>W3C AI 助手</h2>
+    <textarea id="sidebar-question-input" placeholder="請輸入您關於本頁內容的問題..."></textarea>
+    <button id="sidebar-send-button">詢問 AI</button>
+    <div id="sidebar-response"></div>
 
     <!-- ** 靜態引入庫和側邊欄腳本 ** -->
     <!-- 確保文件名正確 -->
     <script src="purify.min.js"></script>
     <script src="marked.min.js"></script>
-    <script src="vue.min.js"></script>
-    <script src="botui.min.js"></script>
     <script src="sidebar.js"></script>
 </body>
 </html>
