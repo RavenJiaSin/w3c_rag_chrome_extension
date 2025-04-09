@@ -16,7 +16,10 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 
 # 取得你的 Chrome 擴充套件 ID (可以在 chrome://extensions/ 找到)
-extension_id = "odmikollhnahmfohmdafkpnlfpopicmh"
+# ravenjs:plmphbheelmdnicgehmagnlhfahgjkme
+# poyen:odmikollhnahmfohmdafkpnlfpopicmh
+extension_id = "plmphbheelmdnicgehmagnlhfahgjkme"
+
 cors_origin = f"chrome-extension://{extension_id}"
 
 # 允許來自指定 Chrome 擴充套件的請求
@@ -103,8 +106,8 @@ def search():
 
 # --- 運行伺服器 ---
 if __name__ == '__main__':
-    print("正在啟動 Flask 伺服器於 http://127.0.0.1:5000")
+    print("正在啟動 Flask 伺服器於 http://127.0.0.0:5000")
     print(f"將允許來自 Chrome 擴充套件 ({cors_origin}) 的請求")
     # 使用 host='0.0.0.0' 如果你需要從區域網路內的其他設備訪問
     # debug=True 僅用於開發，正式部署時應設為 False
-    app.run(host='127.0.0.1', port=5000, debug=False)
+    app.run(host='127.0.0.1', port=5001, debug=False)
