@@ -10,7 +10,8 @@
     ],
     "host_permissions": [
         "https://www.w3.org/TR/*",
-        "https://generativelanguage.googleapis.com/" 
+        "https://generativelanguage.googleapis.com/",
+        "https://127.0.0.1:5000/"
     ],
     "background": {
         "service_worker": "background.js"

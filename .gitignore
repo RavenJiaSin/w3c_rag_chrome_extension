@@ -1,0 +1,5 @@
+__pycache__/*
+db/*
+node_modules/*
+venv/*
+w3c_data.db
