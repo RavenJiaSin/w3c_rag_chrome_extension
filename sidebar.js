@@ -30,8 +30,12 @@ function appendMessage(role, content) {
         const rawHTML = marked.parse(content);
         const safeHTML = DOMPurify.sanitize(rawHTML);
         message.innerHTML = safeHTML;
+        message.classList.add('message', 'ai');
+        message.style.alignSelf = 'flex-start';
     } else {
         message.textContent = content;
+        message.classList.add('message', 'user');
+        message.style.alignSelf = 'flex-end';
     }
 
     chatContainer.appendChild(message);

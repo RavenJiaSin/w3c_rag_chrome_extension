@@ -17,33 +17,40 @@ h2 {
 }
 
 #chat-container {
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 讓 AI 訊息靠左 */
+    padding: 10px;
     overflow-y: auto;
-    padding-right: 5px;
-    margin-bottom: 10px;
+    height: 100%;
 }
 
 .message {
-    max-width: 90%;
-    padding: 10px 12px;
-    margin: 6px 0;
-    border-radius: 8px;
-    line-height: 1.5;
+    display: inline-block;
+    max-width: 80%; /* 限制訊息最大寬度 */
+    padding: 8px 12px;
+    margin: 8px;
+    border-radius: 12px;
+    line-height: 1.4;
+    word-break: break-word;
     white-space: pre-wrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
+/* 使用者訊息靠右、背景色 */
 .message.user {
-    background-color: #007bff;
-    color: white;
     align-self: flex-end;
-    text-align: right;
+    background-color: #1a5e9a;
+    color: white;
+    border-bottom-right-radius: 0;
 }
 
+/* AI 訊息靠左、背景色 */
 .message.ai {
-    background-color: #e5e5ea;
-    color: #111;
     align-self: flex-start;
-    text-align: left;
+    background-color: #f1f0f0;
+    color: #333;
+    border-bottom-left-radius: 0;
 }
 
 #input-area {
@@ -66,7 +73,7 @@ textarea {
 button {
     padding: 10px;
     font-size: 14px;
-    background-color: #007bff;
+    background-color: #0267d3;
     color: white;
     border: none;
     border-radius: 4px;

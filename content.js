@@ -29,7 +29,7 @@
         document.body.appendChild(iframe);
         console.log("✅ AI Assistant iframe injected.");
     }
-
+    
     // --- 注入控制按鈕 ---
     function injectToggleButton() {
         if (document.getElementById('w3c-ai-toggle-button')) {
@@ -38,7 +38,7 @@
 
         const button = document.createElement('button');
         button.id = 'w3c-ai-toggle-button';
-        button.textContent = '⇔'; // 可改成 ▶/◀ 或 AI
+        button.textContent = '🤖'; 
         button.title = 'Toggle Assistant';
         
         // 設定樣式
@@ -64,7 +64,7 @@
             if (!iframe) return;
             const visible = iframe.style.display !== 'none';
             iframe.style.display = visible ? 'none' : 'block';
-            button.textContent = visible ? '⇔' : '×'; // 可自行調整圖示
+            button.textContent = visible ? '🤖' : '🤖'; // 可自行調整圖示
         });
 
         document.body.appendChild(button);
@@ -73,8 +73,8 @@
 
     // --- 文本提取 (保持不變) ---
     function extractTextAndSend() {
-       let w3cContent = "";
-       let contentArray = [];
+        let w3cContent = "";
+        let contentArray = [];
         let mainContent = document.querySelector('#main') || document.querySelector('#content') || document.body;
         const elements = mainContent.querySelectorAll('p, div:not(div div)');
         elements.forEach(node => {
@@ -89,18 +89,13 @@
          });
         w3cContent = contentArray.join("\n\n");
 
-        if (w3cContent.length > 0) {
-             // console.log("✅ 成功擷取內容，長度:", w3cContent.length);
-             chrome.runtime.sendMessage({ action: "extractText", content: w3cContent }, response => {
-                 if (chrome.runtime.lastError) {
-                     console.error("發送內容到 background 失敗:", chrome.runtime.lastError.message);
-                 } else {
-                     // console.log("💬 內容已發送至 background:", response?.status);
-                 }
-             });
-         } else {
-             console.warn("❌ 未能提取到頁面內容");
-         }
+        chrome.storage.local.set({ w3cContent }, () => {
+            if (chrome.runtime.lastError) {
+                console.error("❌ 儲存 W3C 內容到 storage 失敗:", chrome.runtime.lastError.message);
+            } else {
+                console.log("✅ 已儲存 W3C 內容到 chrome.storage.local，長度:", w3cContent.length);
+            }
+        });
     }
 
     // --- 向 iframe 發送消息 ---
