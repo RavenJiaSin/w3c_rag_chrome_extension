@@ -53,6 +53,24 @@ h2 {
     border-bottom-left-radius: 0;
 }
 
+/* 時間戳記樣式 */
+.timestamp {
+    font-size: 10px;
+    color: #888;
+    text-align: center;
+    
+}
+
+/* AI 訊息的時間戳記 */
+.timestamp.ai {
+    align-self: flex-start;
+}
+
+/* 使用者訊息的時間戳記 */
+.timestamp.user {
+    align-self: flex-end;
+}
+
 #input-area {
     display: flex;
     flex-direction: column;

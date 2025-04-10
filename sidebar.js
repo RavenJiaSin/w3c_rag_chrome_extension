@@ -25,20 +25,33 @@ function appendMessage(role, content) {
     const message = document.createElement('div');
     message.classList.add('message', role);
 
+    // 創建時間戳記元素，並將其顯示在對話框外
+    // 獲取當前時間戳記
+    const timestamp = new Date().toLocaleString(); // 使用本地時間格式（你可以根據需要調整格式）
+    const timestampElement = document.createElement('div');
+    timestampElement.classList.add('timestamp', role);
+    timestampElement.textContent = timestamp;
+
     if (role === 'ai') {
         // 將 Markdown 轉換為 HTML，並清理 XSS 風險
         const rawHTML = marked.parse(content);
         const safeHTML = DOMPurify.sanitize(rawHTML);
         message.innerHTML = safeHTML;
         message.classList.add('message', 'ai');
-        message.style.alignSelf = 'flex-start';
+        timestampElement.classList.add('timestamp','ai');
     } else {
         message.textContent = content;
         message.classList.add('message', 'user');
-        message.style.alignSelf = 'flex-end';
+        timestampElement.classList.add('timestamp','user');
     }
 
     chatContainer.appendChild(message);
+
+    // 將時間戳記插入到對話框外，並放置於訊息上方
+    message.parentNode.appendChild(timestampElement);
+    
+
+    
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
