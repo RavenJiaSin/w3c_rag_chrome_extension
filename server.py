@@ -110,4 +110,4 @@ if __name__ == '__main__':
     print(f"將允許來自 Chrome 擴充套件 ({cors_origin}) 的請求")
     # 使用 host='0.0.0.0' 如果你需要從區域網路內的其他設備訪問
     # debug=True 僅用於開發，正式部署時應設為 False
-    app.run(host='127.0.0.1', port=5001, debug=False)
+    app.run(host='127.0.0.1', port=5000, debug=False)
