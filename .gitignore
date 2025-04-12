@@ -1,5 +1,9 @@
 __pycache__/*
 db/*
 node_modules/*
-venv/*
+.venv/*
 w3c_data.db
+chroma_w3c_stores/*
+faiss_w3c_stores/*
+db.zip
+.env
