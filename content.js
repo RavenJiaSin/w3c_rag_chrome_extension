@@ -18,7 +18,7 @@
         iframe.style.top = '80px';
         iframe.style.right = '20px';
         iframe.style.bottom = '40px'; // 控制底部距離
-        iframe.style.width = '380px'; // 與 sidebar.html 內 body 寬度匹配或稍大
+        iframe.style.width = '480px'; // 與 sidebar.html 內 body 寬度匹配或稍大
         iframe.style.height = 'calc(100vh - 120px)'; // 高度基於 top 和 bottom
         iframe.style.border = 'none'; // 通常不需要邊框
         iframe.style.borderRadius = '8px'; // 可以給 iframe 加圓角
@@ -75,10 +75,11 @@
     function extractTextAndSend() {
         let w3cContent = "";
         let contentArray = [];
+    
+        // 擷取主內容區塊
         let mainContent = document.querySelector('#main') || document.querySelector('#content') || document.body;
         const elements = mainContent.querySelectorAll('p, div:not(div div)');
         elements.forEach(node => {
-            // ** 確保排除 iframe **
             if (node.closest('nav, header, footer, .toc, #toc, #w3c-ai-assistant-iframe')) {
                 return;
             }
@@ -88,12 +89,19 @@
             }
         });
         w3cContent = contentArray.join("\n\n");
-
-        chrome.storage.local.set({ w3cContent }, () => {
+    
+        // 擷取文章標題：先看是否有 <h1>，否則退而求其次用 <title>
+        let articleTitle = document.querySelector('h1')?.innerText?.trim()
+            || document.title?.trim()
+            || "Untitled";
+    
+        // 儲存到 Chrome Storage
+        chrome.storage.local.set({ w3cContent, articleTitle }, () => {
             if (chrome.runtime.lastError) {
                 console.error("❌ 儲存 W3C 內容到 storage 失敗:", chrome.runtime.lastError.message);
             } else {
-                console.log("✅ 已儲存 W3C 內容到 chrome.storage.local，長度:", w3cContent.length);
+                console.log("✅ 已儲存 W3C 內容與標題到 chrome.storage.local，長度:", w3cContent.length);
+                console.log("📌 標題:", articleTitle);
             }
         });
     }
@@ -124,20 +132,30 @@
             case 'queryAI':
                 // iframe 請求查詢 AI
                 const question = message.payload.question;
+                const modelName = message.payload.model_name || null; // 可支援模型選擇
+
                 console.log("Content Script: Forwarding query to background:", question);
-                // **向 background 發送查詢請求**
-                chrome.runtime.sendMessage({ action: "queryGemini", question: question }, (response) => {
+
+                // 組裝發送資料
+                const sendData = {
+                    action: "queryMessage",
+                    user_question: question
+                };
+                if (modelName) {
+                    sendData.model_name = modelName;
+                }
+
+                // 向 background 發送查詢請求
+                chrome.runtime.sendMessage(sendData, (response) => {
                     if (chrome.runtime.lastError) {
                         console.error("Content Script: Error communicating with background:", chrome.runtime.lastError.message);
-                        // **將錯誤信息發回給 iframe**
                         sendMessageToIframe('aiError', { status: 'error', response: `通訊錯誤: ${chrome.runtime.lastError.message}` });
                         return;
                     }
 
                     if (response) {
-                        // **將 background 的回應轉發給 iframe**
                         console.log("Content Script: Received response from background, forwarding to iframe:", response);
-                        // 發送完整的響應對象，讓 iframe 根據 status 處理
+
                         if (response.status === 'success') {
                             sendMessageToIframe('aiResponse', { status: response.status, response: response.response });
                         } else if (response.status === 'no_content') {
@@ -145,7 +163,6 @@
                         } else if (response.status === 'error') {
                             sendMessageToIframe('aiError', { status: response.status, response: response.response });
                         } else {
-                            // 其他未知狀態
                             sendMessageToIframe('unknownStatus', { status: response.status, payload: response });
                         }
 

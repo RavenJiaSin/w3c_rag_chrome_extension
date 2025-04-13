@@ -64,11 +64,13 @@ h2 {
 /* AI 訊息的時間戳記 */
 .timestamp.ai {
     align-self: flex-start;
+    margin-left: 8px;
 }
 
 /* 使用者訊息的時間戳記 */
 .timestamp.user {
     align-self: flex-end;
+    margin-right: 8px;
 }
 
 #input-area {

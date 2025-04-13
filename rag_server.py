@@ -18,6 +18,12 @@ from pydantic import BaseModel, ValidationError
 from sentence_transformers import SentenceTransformer
 import textwrap
 import threading
+from flask_cors import CORS
+
+
+# ravenjs:plmphbheelmdnicgehmagnlhfahgjkme
+# poyen:odmikollhnahmfohmdafkpnlfpopicmh
+extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
 
 # --- 1. Configuration ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -44,7 +50,8 @@ LANGUAGES = ['en', 'zh']
 MAX_CONTEXT_TOKENS = 4000
 TOP_K_CONTENT = 2
 TOP_K_HISTORY = 3
-SERVER_PORT = 5050 # Use the working port
+SERVER_PORT = 5000
+0 # Use the working port
 
 # --- Global Application State ---
 app_state = {} # Dictionary to hold loaded resources
@@ -346,6 +353,7 @@ else:
 # --- 5. Flask App Initialization ---
 app = Flask(__name__) # Create Flask app instance
 logging.info("Flask 應用實例已創建。")
+CORS(app, origins=f"chrome-extension://{extension_ID}", supports_credentials=True)
 
 # --- 6. API Endpoint Definition ---
 @app.route("/rag_query", methods=["POST"])
