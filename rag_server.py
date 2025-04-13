@@ -31,8 +31,8 @@ except ImportError:
 
 
 # Example extension ID, replace with your actual ID if needed for CORS
-# extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
-extension_ID = 'odmikollhnahmfohmdafkpnlfpopicmh'
+extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
+# extension_ID = 'odmikollhnahmfohmdafkpnlfpopicmh'
 
 # --- 1. Configuration ---
 logging.basicConfig(

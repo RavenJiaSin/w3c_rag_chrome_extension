@@ -5,7 +5,7 @@
     right: 20px;
     bottom: 40px;
     width: 480px;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 130px);
     border: none;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -22,7 +22,7 @@
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: #fff;
     font-size: 18px;
     border: none;

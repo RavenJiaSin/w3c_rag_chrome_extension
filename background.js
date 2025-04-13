@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             .then(data => {
                 const reply = data.response || "AI 沒有提供任何回答。";
                 console.log("✅ 收到伺服器回應。");
-                sendResponse({ status: "success", response: reply });
+                sendResponse({ status: "success", response: reply, model_name: modelName });
             })
             .catch(error => {
                 console.error("❌ 發送查詢時發生錯誤:", error);

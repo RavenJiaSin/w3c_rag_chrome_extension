@@ -1,6 +1,8 @@
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const chatContainer = document.getElementById('chat-container');
+let selectedModel = null;
+const modelSelect = document.getElementById('model-select');
 
 // 告訴 content.js 我準備好了
 window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
@@ -17,43 +19,62 @@ sendButton.addEventListener('click', () => {
     window.parent.postMessage({
         source: 'iframe-ai-assistant',
         type: 'queryAI',
-        payload: { question }
+        payload: {
+            question: question,
+            model_name: selectedModel
+        }
     }, '*');
 });
 
-function appendMessage(role, content) {
+function appendMessage(role, content, modelName = null) {
     const message = document.createElement('div');
     message.classList.add('message', role);
 
-    // 創建時間戳記元素，並將其顯示在對話框外
-    // 獲取當前時間戳記
-    const timestamp = new Date().toLocaleString(); // 使用本地時間格式（你可以根據需要調整格式）
-    const timestampElement = document.createElement('div');
-    timestampElement.classList.add('timestamp', role);
-    timestampElement.textContent = timestamp;
+    const contentElement = document.createElement('div');
+    contentElement.classList.add('content');
 
     if (role === 'ai') {
-        // 將 Markdown 轉換為 HTML，並清理 XSS 風險
         const rawHTML = marked.parse(content);
         const safeHTML = DOMPurify.sanitize(rawHTML);
-        message.innerHTML = safeHTML;
-        message.classList.add('message', 'ai');
-        timestampElement.classList.add('timestamp','ai');
+        contentElement.innerHTML = safeHTML;
     } else {
-        message.textContent = content;
-        message.classList.add('message', 'user');
-        timestampElement.classList.add('timestamp','user');
+        contentElement.textContent = content;
     }
 
+    message.appendChild(contentElement);
     chatContainer.appendChild(message);
 
-    // 將時間戳記插入到對話框外，並放置於訊息上方
-    message.parentNode.appendChild(timestampElement);
+    // 建立 footer（時間戳 + 模型名）
+    const footer = document.createElement('div');
+    footer.classList.add('timestamp', role);
     
 
+    const timeString = new Date().toLocaleString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
     
+    footer.textContent = timeString;
+
+    if (role === 'ai' && modelName) {
+        const modelTag = document.createElement('span');
+        modelTag.classList.add('model-tag');
+        modelTag.textContent = ` • ${modelName}`;
+        modelTag.style.marginLeft = '8px';
+        footer.appendChild(modelTag);
+    }
+
+    // 插入到訊息框「上方」
+    chatContainer.insertBefore(footer, message.nextSibling);
+
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
+
 
 // 接收 content.js 的回應
 window.addEventListener('message', (event) => {
@@ -63,7 +84,7 @@ window.addEventListener('message', (event) => {
 
     switch(type) {
         case 'aiResponse':
-            appendMessage('ai', payload.response);
+            appendMessage('ai', payload.response, payload.model_name || null);
             break;
         case 'aiError':
             appendMessage('ai', `❗ Error: ${payload.response}`);
@@ -74,4 +95,10 @@ window.addEventListener('message', (event) => {
         default:
             console.warn("Unknown message type from content.js:", type);
     }
+});
+
+modelSelect.addEventListener('change', (e) => {
+    selectedModel = e.target.value;
+    // 可選：儲存選擇到 storage
+    chrome.storage.local.set({ selectedModel });
 });

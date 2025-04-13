@@ -73,11 +73,6 @@ h2 {
     margin-right: 8px;
 }
 
-#input-area {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
 
 textarea {
     width: 100%;
@@ -88,25 +83,6 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
-
-button {
-    padding: 10px;
-    font-size: 14px;
-    background-color: #0267d3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover:not(:disabled) {
-    background-color: #0056b3;
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
 }
 
 .message.ai h1, .message.ai h2, .message.ai h3 {
@@ -138,4 +114,65 @@ button:disabled {
     padding-left: 10px;
     color: #666;
     margin: 0.5em 0;
+}
+
+
+.model-tag {
+    font-style: italic;
+    background-color: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin-left: 8px;
+    color: #555;
+}
+
+.footer {
+    font-Size: 0.8em;
+    color: #888;
+    margin: 4px 0 8px 0;
+}
+
+
+#input-area {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#user-input {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+#send-button {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #45a049;
+}
+
+#model-selection {
+    display: flex;
+    flex-direction: column;
+}
+
+#model-select {
+    padding: 10px;
+    font-size: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }

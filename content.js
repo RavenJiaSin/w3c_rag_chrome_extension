@@ -124,7 +124,7 @@
                         console.log("Content Script: Received response from background, forwarding to iframe:", response);
 
                         if (response.status === 'success') {
-                            sendMessageToIframe('aiResponse', { status: response.status, response: response.response });
+                            sendMessageToIframe('aiResponse', { status: response.status, response: response.response, model_name: response.model_name || null });
                         } else if (response.status === 'no_content') {
                             sendMessageToIframe('noContent', { status: response.status, message: response.message });
                         } else if (response.status === 'error') {
