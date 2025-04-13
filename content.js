@@ -12,20 +12,6 @@
         iframe = document.createElement('iframe');
         iframe.id = 'w3c-ai-assistant-iframe';
         iframe.src = chrome.runtime.getURL(IFRAME_SOURCE);
-
-        // --- 設置 iframe 樣式 ---
-        iframe.style.position = 'fixed';
-        iframe.style.top = '80px';
-        iframe.style.right = '20px';
-        iframe.style.bottom = '40px'; // 控制底部距離
-        iframe.style.width = '480px'; // 與 sidebar.html 內 body 寬度匹配或稍大
-        iframe.style.height = 'calc(100vh - 120px)'; // 高度基於 top 和 bottom
-        iframe.style.border = 'none'; // 通常不需要邊框
-        iframe.style.borderRadius = '8px'; // 可以給 iframe 加圓角
-        iframe.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-        iframe.style.zIndex = '9999';
-        iframe.style.backgroundColor = 'white'; // 背景色以防加載時透明
-
         document.body.appendChild(iframe);
         console.log("✅ AI Assistant iframe injected.");
     }
@@ -40,24 +26,6 @@
         button.id = 'w3c-ai-toggle-button';
         button.textContent = '🤖'; 
         button.title = 'Toggle Assistant';
-
-        // 設定樣式
-        Object.assign(button.style, {
-            position: 'fixed',
-            right: '20px',
-            bottom: '20px',
-            zIndex: '10000',
-            width: '40px',
-            height: '40px',
-            borderRadius: '20px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            fontSize: '18px',
-            border: 'none',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
-            cursor: 'pointer',
-        });
-
         // 點擊切換 iframe 顯示
         button.addEventListener('click', () => {
             const iframe = document.getElementById('w3c-ai-assistant-iframe');
@@ -66,7 +34,6 @@
             iframe.style.display = visible ? 'none' : 'block';
             button.textContent = visible ? '🤖' : '🤖'; // 可自行調整圖示
         });
-
         document.body.appendChild(button);
         console.log("✅ Toggle button injected.");
     }

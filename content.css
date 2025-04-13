@@ -1,0 +1,31 @@
+/* iframe 樣式 */
+#w3c-ai-assistant-iframe {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    bottom: 40px;
+    width: 480px;
+    height: calc(100vh - 120px);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    background-color: white;
+}
+
+/* 控制按鈕樣式 */
+#w3c-ai-toggle-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10000;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}

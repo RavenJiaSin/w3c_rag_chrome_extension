@@ -23,6 +23,7 @@
         {
             "matches": ["https://www.w3.org/TR/*"],
             "js": ["content.js"],
+            "css": ["content.css"],
             "run_at": "document_idle"
         }
     ],
