@@ -1,4 +1,4 @@
-const RAG_SERVER_URL = "http://127.0.0.1:5000/rag_query";
+const RAG_SERVER_URL = "http://127.0.0.1:5050/rag_query";
 const DEFAULT_MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct";
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -41,7 +41,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     query_message: queryMessage,
-                    model_name: modelName
+                    model_name: modelName,
+                    page_content: pageContent,
                 })
             })
             .then(async response => {
