@@ -1,4 +1,4 @@
-const RAG_SERVER_URL = "http://127.0.0.1:5050/rag_query";
+const RAG_SERVER_URL = "http://127.0.0.1:5050";
 const DEFAULT_MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct";
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -36,7 +36,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             console.log("🧠 模型名稱:", modelName);
 
             // 發送給後端
-            fetch(RAG_SERVER_URL, {
+            fetch(`${RAG_SERVER_URL}/rag_query`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -65,7 +65,31 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
 
         return true; // 非同步回應
+    } 
+
+    else if (request.action === "clearMemory") {
+        fetch(`${RAG_SERVER_URL}/clear_memory`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"  // 即使沒 body，還是給標頭讓 server 不會拒絕
+            },
+            body: JSON.stringify({}) // 若 server 接受空的 JSON，也可以這樣傳
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                sendResponse({ status: "success", message: data.message });
+            } else {
+                sendResponse({ status: "error", message: data.detail || "清除記憶失敗" });
+            }
+        })
+        .catch(err => {
+            console.error("Background: Clear memory failed:", err);
+            sendResponse({ status: "error", message: "背景清除記憶發生錯誤" });
+        });
+        return true;
     }
+    
 });
 
 console.log("🏁 Background script 已載入（使用 storage 中的頁面內容 + user_question）");

@@ -1,15 +1,22 @@
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
+const clear_memory_button = document.getElementById('clear-memory-button');
+const clear_memory_status = document.getElementById("clear-memory-status");
 const chatContainer = document.getElementById('chat-container');
 let selectedModel = null;
+let waitingDots = null;
 const modelSelect = document.getElementById('model-select');
 
 // 告訴 content.js 我準備好了
 window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
 
 sendButton.addEventListener('click', () => {
+    sendButton.disabled = true;  // 禁用按鈕
     const question = userInput.value.trim();
-    if (question === '') return;
+    if (question === '') {
+        sendButton.disabled = false;
+        return;
+    }
 
     appendMessage('user', question);
     userInput.value = '';
@@ -24,6 +31,20 @@ sendButton.addEventListener('click', () => {
             model_name: selectedModel
         }
     }, '*');
+    
+    waitingDots = createWaitingDots();
+    chatContainer.appendChild(waitingDots);
+});
+
+clear_memory_button.addEventListener("click", async () => {
+    clear_memory_button.disabled = true;  // 禁用按鈕
+    clear_memory_status.textContent = "Clearing memory...";
+    clear_memory_status.style.color = "gray";
+
+    window.parent.postMessage({
+        source: 'iframe-ai-assistant',
+        type: 'clearMemory',
+    }, '*');
 });
 
 function appendMessage(role, content, modelName = null) {
@@ -34,10 +55,11 @@ function appendMessage(role, content, modelName = null) {
     contentElement.classList.add('content');
 
     if (role === 'ai') {
+        chatContainer.removeChild(waitingDots);
         const rawHTML = marked.parse(content);
         const safeHTML = DOMPurify.sanitize(rawHTML);
         contentElement.innerHTML = safeHTML;
-    } else {
+    } else if (role === 'user') {
         contentElement.textContent = content;
     }
 
@@ -69,10 +91,24 @@ function appendMessage(role, content, modelName = null) {
         footer.appendChild(modelTag);
     }
 
-    // 插入到訊息框「上方」
+    // 插入到訊息框「下方」
     chatContainer.insertBefore(footer, message.nextSibling);
 
     chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function createWaitingDots() {
+    const dotContainer = document.createElement('div');
+    dotContainer.className = 'waiting-dots';
+
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.style.animationDelay = `${i * 0.2}s`;
+        dotContainer.appendChild(dot);
+    }
+
+    return dotContainer;
 }
 
 
@@ -85,12 +121,25 @@ window.addEventListener('message', (event) => {
     switch(type) {
         case 'aiResponse':
             appendMessage('ai', payload.response, payload.model_name || null);
+            sendButton.disabled = false; // 啟用按鈕
             break;
         case 'aiError':
             appendMessage('ai', `❗ Error: ${payload.response}`);
+            sendButton.disabled = false; // 啟用按鈕
             break;
         case 'noContent':
             appendMessage('ai', `⚠️ ${payload.message}`);
+            sendButton.disabled = false; // 啟用按鈕
+            break;
+        case 'memoryCleared':
+            clear_memory_status.textContent = payload.message;
+            clear_memory_status.style.color = "green";
+            clear_memory_button.disabled = false; // 啟用按鈕
+            break;
+        case 'clearMemoryError':
+            clear_memory_status.textContent = payload.response;
+            clear_memory_status.style.color = "red";
+            clear_memory_button.disabled = false; // 啟用按鈕
             break;
         default:
             console.warn("Unknown message type from content.js:", type);

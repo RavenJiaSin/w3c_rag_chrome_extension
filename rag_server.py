@@ -679,6 +679,53 @@ def perform_rag_flask():
         logging.exception(f"處理請求 '/rag_query' 時發生意外錯誤: {e}")
         return jsonify({"detail": "An internal server error occurred"}), 500
 
+@app.route("/clear_memory", methods=["POST"])
+def clear_conversation_history():
+    """API endpoint to clear the conversation history."""
+    logging.info("--- Endpoint Start (/clear_memory) ---")
+    try:
+        chroma_client = app_state.get("chroma_client")
+        history_ef = app_state.get("chroma_ef_map", {}).get('en')
+
+        if not chroma_client:
+            logging.error("ChromaDB client not available.")
+            return jsonify({"detail": "ChromaDB client not initialized"}), 500
+        if not history_ef:
+            logging.error("History embedding function not available.")
+            return jsonify({"detail": "History embedding function not initialized"}), 500
+
+        logging.info(f"Attempting to clear history collection: {MESSAGE_HISTORY_COLLECTION_NAME}")
+
+        # Delete the existing collection
+        try:
+            chroma_client.delete_collection(name=MESSAGE_HISTORY_COLLECTION_NAME)
+            logging.info(f"Collection '{MESSAGE_HISTORY_COLLECTION_NAME}' deleted.")
+        except Exception as e_del:
+            # Log the error but proceed, as get_or_create_collection will handle creation
+            logging.warning(f"Could not delete collection '{MESSAGE_HISTORY_COLLECTION_NAME}' (might not exist): {e_del}")
+            # You might want to check the specific exception type here if needed
+
+        # Recreate the collection (empty)
+        try:
+            new_history_collection = chroma_client.get_or_create_collection(
+                name=MESSAGE_HISTORY_COLLECTION_NAME,
+                embedding_function=history_ef,
+                metadata={"hnsw:space": "l2"} # Ensure settings match initial creation
+            )
+            # Update the reference in app_state
+            app_state["message_history_collection"] = new_history_collection
+            logging.info(f"Collection '{MESSAGE_HISTORY_COLLECTION_NAME}' recreated successfully.")
+            return jsonify({"status": "success", "message": "Conversation history cleared."}), 200
+        except Exception as e_create:
+            logging.error(f"Failed to recreate history collection '{MESSAGE_HISTORY_COLLECTION_NAME}': {e_create}")
+            # Attempt to set the app_state reference to None if creation fails
+            app_state["message_history_collection"] = None
+            return jsonify({"detail": f"Failed to recreate history collection: {e_create}"}), 500
+
+    except Exception as e:
+        logging.exception(f"處理請求 '/clear_memory' 時發生意外錯誤: {e}")
+        return jsonify({"detail": "An internal server error occurred while clearing history"}), 500
+
 # --- 7. Main Execution Block (for running Flask dev server) ---
 if __name__ == "__main__":
     if not app_state.get("resources_ready", False):

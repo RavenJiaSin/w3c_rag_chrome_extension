@@ -15,14 +15,17 @@
         <textarea id="user-input" placeholder="Ask a question..."></textarea>
         <button id="send-button" title="Send">➤</button>
     </div>
-    <div id="model-selection">
+    <div id="taskBar">
         <select id="model-select">
             <option value="meta-llama/llama-4-scout-17b-16e-instruct">llama-4-scout-17b-16e-instruct</option>
             <option value="meta-llama/llama-4-maverick-17b-128e-instruct">llama-4-maverick-17b-128e-instruct</option>
             <option value="llama-3.3-70b-specdec">llama-3.3-70b-specdec</option>
             <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
         </select>
+        <button id="clear-memory-button">Clear Memory</button>
+        <div id="clear-memory-status"></div>
     </div>
+    
     <script src="purify.min.js"></script>
     <script src="marked.min.js"></script>
     <script src="sidebar.js"></script>

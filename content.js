@@ -139,6 +139,27 @@
                     }
                 });
                 break;
+
+            case 'clearMemory':
+                console.log("Content Script: Received clearMemory request from iframe, forwarding to background.");
+                const clearData = {
+                    action: "clearMemory"
+                };
+                chrome.runtime.sendMessage(clearData, (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error("Content Script: Error communicating with background (clearMemory):", chrome.runtime.lastError.message);
+                        sendMessageToIframe('clearMemoryError', { status: 'error', response: `清除記憶通訊錯誤: ${chrome.runtime.lastError.message}` });
+                        return;
+                    }
+            
+                    if (response && response.status === 'success') {
+                        sendMessageToIframe('memoryCleared', { status: 'success', message: response.message });
+                    } else {
+                        sendMessageToIframe('clearMemoryError', { status: 'error', response: response?.message || '未知錯誤' });
+                    }
+                });
+                break;
+
             case 'iframeReady':
                 // iframe 發送消息表示它已加載完成
                 console.log("Content Script: iframe reported ready.");
