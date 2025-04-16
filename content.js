@@ -16,7 +16,7 @@
         console.log("✅ AI Assistant iframe injected.");
     }
     
-    // --- 注入控制按鈕 ---
+    // --- 注入控制按鈕(🤖) ---
     function injectToggleButton() {
         if (document.getElementById('w3c-ai-toggle-button')) {
             return; // 防止重複注入
@@ -38,7 +38,7 @@
         console.log("✅ Toggle button injected.");
     }
 
-    // --- 文本提取 (保持不變) ---
+    // --- 文本提取  ---
     function extractTextAndSend() {
         let w3cContent = "";
         let contentArray = [];
@@ -96,6 +96,7 @@
         console.log("Content Script: Received message from iframe:", message);
 
         switch (message.type) {
+            // iframe傳來AI查詢請求
             case 'queryAI':
                 // iframe 請求查詢 AI
                 const question = message.payload.question;
@@ -139,12 +140,14 @@
                     }
                 });
                 break;
-
+            
+            // iframe傳來清除記憶請求
             case 'clearMemory':
                 console.log("Content Script: Received clearMemory request from iframe, forwarding to background.");
                 const clearData = {
                     action: "clearMemory"
                 };
+                // 向 background 發送清除記憶請求
                 chrome.runtime.sendMessage(clearData, (response) => {
                     if (chrome.runtime.lastError) {
                         console.error("Content Script: Error communicating with background (clearMemory):", chrome.runtime.lastError.message);
@@ -166,7 +169,7 @@
                 iframeReady = true;
                 // 可以在這裡做一些 iframe 加載後才做的事情
                 break;
-            // 可以添加其他消息類型
+            // 可以添加其他消息類型case
         }
     });
 

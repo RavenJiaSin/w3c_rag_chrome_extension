@@ -2,6 +2,7 @@ const RAG_SERVER_URL = "http://127.0.0.1:5050";
 const DEFAULT_MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct";
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    
     if (request.action === "queryMessage") {
         const userQuestion = request.user_question;
         const modelName = request.model_name || DEFAULT_MODEL_NAME;
@@ -35,7 +36,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             console.log("📨 傳送 query_message 至伺服器...");
             console.log("🧠 模型名稱:", modelName);
 
-            // 發送給後端
+            // 發送給後端http://127.0.0.1:5050/rag_query
             fetch(`${RAG_SERVER_URL}/rag_query`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -68,6 +69,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } 
 
     else if (request.action === "clearMemory") {
+        // 發送給後端http://127.0.0.1:5050/clear_memory
         fetch(`${RAG_SERVER_URL}/clear_memory`, {
             method: "POST",
             headers: {

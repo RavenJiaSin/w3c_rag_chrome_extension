@@ -3,59 +3,25 @@ const sendButton = document.getElementById('send-button');
 const clear_memory_button = document.getElementById('clear-memory-button');
 const clear_memory_status = document.getElementById("clear-memory-status");
 const chatContainer = document.getElementById('chat-container');
+const modelSelect = document.getElementById('model-select');
 let selectedModel = null;
 let waitingDots = null;
-const modelSelect = document.getElementById('model-select');
 
-// 告訴 content.js 我準備好了
-window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
-
-sendButton.addEventListener('click', () => {
-    sendButton.disabled = true;  // 禁用按鈕
-    const question = userInput.value.trim();
-    if (question === '') {
-        sendButton.disabled = false;
-        return;
-    }
-
-    appendMessage('user', question);
-    userInput.value = '';
-    userInput.focus();
-
-    // 發送訊息給 content.js
-    window.parent.postMessage({
-        source: 'iframe-ai-assistant',
-        type: 'queryAI',
-        payload: {
-            question: question,
-            model_name: selectedModel
-        }
-    }, '*');
-    
-    waitingDots = createWaitingDots();
-    chatContainer.appendChild(waitingDots);
-});
-
-clear_memory_button.addEventListener("click", async () => {
-    clear_memory_button.disabled = true;  // 禁用按鈕
-    clear_memory_status.textContent = "Clearing memory...";
-    clear_memory_status.style.color = "gray";
-
-    window.parent.postMessage({
-        source: 'iframe-ai-assistant',
-        type: 'clearMemory',
-    }, '*');
-});
-
+// 於chatContainer中加入新訊息
 function appendMessage(role, content, modelName = null) {
+    // 創建新的訊息泡泡
     const message = document.createElement('div');
     message.classList.add('message', role);
 
+    // 創建新的文字訊息
     const contentElement = document.createElement('div');
     contentElement.classList.add('content');
 
+    // 判斷當前訊息是由ai或user發出
     if (role === 'ai') {
+        // 移除聊天室中的等待符號
         chatContainer.removeChild(waitingDots);
+        // 處理markdown
         const rawHTML = marked.parse(content);
         const safeHTML = DOMPurify.sanitize(rawHTML);
         contentElement.innerHTML = safeHTML;
@@ -63,14 +29,16 @@ function appendMessage(role, content, modelName = null) {
         contentElement.textContent = content;
     }
 
+    // 將文字訊息放入訊息泡泡
     message.appendChild(contentElement);
+    // 將訊息泡泡放入聊天室
     chatContainer.appendChild(message);
 
     // 建立 footer（時間戳 + 模型名）
     const footer = document.createElement('div');
     footer.classList.add('timestamp', role);
     
-
+    // 時間格式
     const timeString = new Date().toLocaleString('zh-TW', {
         year: 'numeric',
         month: '2-digit',
@@ -97,6 +65,7 @@ function appendMessage(role, content, modelName = null) {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
+// 等待ai回應時的圖示
 function createWaitingDots() {
     const dotContainer = document.createElement('div');
     dotContainer.className = 'waiting-dots';
@@ -110,6 +79,50 @@ function createWaitingDots() {
 
     return dotContainer;
 }
+
+// 告訴 content.js 我準備好了
+window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
+
+// 按下訊息傳送按鈕
+sendButton.addEventListener('click', () => {
+    sendButton.disabled = true;  // 禁用按鈕
+    const question = userInput.value.trim();
+    if (question === '') { // 若訊息為空不會船到後台
+        sendButton.disabled = false;
+        return;
+    }
+
+    // 將user訊息放入聊天室
+    appendMessage('user', question);
+    userInput.value = '';
+    userInput.focus();
+
+    // 發送訊息給 content.js
+    window.parent.postMessage({
+        source: 'iframe-ai-assistant',
+        type: 'queryAI',
+        payload: {
+            question: question,
+            model_name: selectedModel
+        }
+    }, '*');
+    
+    // 新增等待圖示到聊天室
+    waitingDots = createWaitingDots();
+    chatContainer.appendChild(waitingDots);
+});
+
+// 按下記憶清除按鈕
+clear_memory_button.addEventListener("click", async () => {
+    clear_memory_button.disabled = true;  // 禁用按鈕
+    clear_memory_status.textContent = "Clearing memory...";
+    clear_memory_status.style.color = "gray";
+
+    window.parent.postMessage({
+        source: 'iframe-ai-assistant',
+        type: 'clearMemory',
+    }, '*');
+});
 
 
 // 接收 content.js 的回應
@@ -146,8 +159,9 @@ window.addEventListener('message', (event) => {
     }
 });
 
+// 選擇模型
 modelSelect.addEventListener('change', (e) => {
     selectedModel = e.target.value;
     // 可選：儲存選擇到 storage
-    chrome.storage.local.set({ selectedModel });
+    // chrome.storage.local.set({ selectedModel });
 });
