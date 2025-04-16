@@ -152,7 +152,7 @@ textarea {
 #send-button {
     width: 50px;
     height: 50px;
-    background-color: #4CAF50;
+    background-color: #1a5e9a;
     color: white;
     font-size: 20px;
     border: none;
@@ -162,10 +162,10 @@ textarea {
 }
 
 #send-button:hover {
-    background-color: #45a049;
+    background-color: #2a7dc6;
 }
 #send-button:disabled {
-    background-color: #819f83;
+    background-color: #7c91a3;
     content: '...';
 }
 
@@ -186,17 +186,17 @@ textarea {
 #clear-memory-button {
     width: 100px;
     height: 30px;
-    background-color: #4CAF50;
+    background-color: #1a5e9a;
     color: white;
     border: none;
     border-radius: 8px;
     margin-left: 5px;
 }
 #clear-memory-button:hover {
-    background-color: #45a049;
+    background-color: #2a7dc6;
 }
 #clear-memory-button:disabled {
-    background-color: #819f83;
+    background-color: #7c91a3;
 }
 
 #clear-memory-status {

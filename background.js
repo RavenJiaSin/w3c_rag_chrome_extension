@@ -87,7 +87,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         })
         .catch(err => {
             console.error("Background: Clear memory failed:", err);
-            sendResponse({ status: "error", message: "背景清除記憶發生錯誤" });
+            sendResponse({ status: "error", message: "Background: Clear memory failed" });
         });
         return true;
     }

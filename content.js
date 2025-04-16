@@ -151,7 +151,7 @@
                 chrome.runtime.sendMessage(clearData, (response) => {
                     if (chrome.runtime.lastError) {
                         console.error("Content Script: Error communicating with background (clearMemory):", chrome.runtime.lastError.message);
-                        sendMessageToIframe('clearMemoryError', { status: 'error', response: `清除記憶通訊錯誤: ${chrome.runtime.lastError.message}` });
+                        sendMessageToIframe('clearMemoryError', { status: 'error', response: `Error communicating with background (clearMemory): ${chrome.runtime.lastError.message}` });
                         return;
                     }
             
