@@ -58,7 +58,7 @@ h2 {
 /* system 訊息靠左、背景色 */
 .message.system {
     align-self: flex-start;
-    background-color: #f1f0f0;
+    background-color: #f2f8fc;
     color: #333;
     border-bottom-left-radius: 0;
 }
@@ -73,6 +73,12 @@ h2 {
 
 /* AI 訊息的時間戳記 */
 .timestamp.ai {
+    align-self: flex-start;
+    margin-left: 8px;
+}
+
+/* system 訊息的時間戳記 */
+.timestamp.system {
     align-self: flex-start;
     margin-left: 8px;
 }
