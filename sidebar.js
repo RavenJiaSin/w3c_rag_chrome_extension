@@ -27,7 +27,10 @@ function appendMessage(role, content, modelName = null) {
         contentElement.innerHTML = safeHTML;
     } else if (role === 'user') {
         contentElement.textContent = content;
+    } else if (role === 'system') {
+        contentElement.textContent = content;
     }
+    
 
     // 將文字訊息放入訊息泡泡
     message.appendChild(contentElement);
@@ -80,8 +83,16 @@ function createWaitingDots() {
     return dotContainer;
 }
 
-// 告訴 content.js 我準備好了
-window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
+function initialize() {
+    // 告訴 content.js 準備好了
+    window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
+    const welcomeMessage = `歡迎使用 W3C 標準閱讀助手！\n請在下方輸入您對當前頁面標準文件的任何問題\n系統將根據頁面內容與相關技術文件，即時為您提供 AI 解說。`;
+    appendMessage('system', welcomeMessage);
+    return;
+}
+
+
+initialize();
 
 // 按下訊息傳送按鈕
 sendButton.addEventListener('click', () => {
