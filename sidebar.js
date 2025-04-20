@@ -1,7 +1,6 @@
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const clear_memory_button = document.getElementById('clear-memory-button');
-const clear_memory_status = document.getElementById("clear-memory-status");
 const chatContainer = document.getElementById('chat-container');
 const modelSelect = document.getElementById('model-select');
 let selectedModel = null;
@@ -83,6 +82,16 @@ function createWaitingDots() {
     return dotContainer;
 }
 
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+
+    setTimeout(() => {
+        toast.className = 'toast hidden';
+    }, 3000); // 顯示 3 秒
+}
+
 function initialize() {
     // 告訴 content.js 準備好了
     window.parent.postMessage({ source: 'iframe-ai-assistant', type: 'iframeReady' }, '*');
@@ -126,8 +135,8 @@ sendButton.addEventListener('click', () => {
 // 按下記憶清除按鈕
 clear_memory_button.addEventListener("click", async () => {
     clear_memory_button.disabled = true;  // 禁用按鈕
-    clear_memory_status.textContent = "Clearing memory...";
-    clear_memory_status.style.color = "gray";
+    clear_memory_button.textContent = "Clearing ...";
+    
 
     window.parent.postMessage({
         source: 'iframe-ai-assistant',
@@ -156,14 +165,14 @@ window.addEventListener('message', (event) => {
             sendButton.disabled = false; // 啟用按鈕
             break;
         case 'memoryCleared':
-            clear_memory_status.textContent = payload.message;
-            clear_memory_status.style.color = "green";
+            clear_memory_button.textContent = "Clear Memory";
             clear_memory_button.disabled = false; // 啟用按鈕
+            showToast("記憶已成功清除！", "success");
             break;
         case 'clearMemoryError':
-            clear_memory_status.textContent = payload.response;
-            clear_memory_status.style.color = "red";
+            clear_memory_button.textContent = "Clear Memory";
             clear_memory_button.disabled = false; // 啟用按鈕
+            showToast("清除記憶失敗，請稍後再試！", "error");
             break;
         default:
             console.warn("Unknown message type from content.js:", type);

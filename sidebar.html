@@ -7,35 +7,29 @@
     <link rel="stylesheet" href="sidebar.css" />
 </head>
 <body>
-    <h2>W3C AI Assistant</h2>
-
+    <div id="headerBar">
+        <h2>W3C AI Assistant</h2>
+        <div id="taskBar">
+            <select id="model-select">
+                <option value="meta-llama/llama-4-scout-17b-16e-instruct">llama-4-scout-17b-16e-instruct</option>
+                <option value="meta-llama/llama-4-maverick-17b-128e-instruct">llama-4-maverick-17b-128e-instruct</option>
+                <option value="llama-3.3-70b-specdec">llama-3.3-70b-specdec</option>
+                <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
+                <option value="llama-3.1-8b-instant">llama-3.1-8b-instant</option>
+                <option value="llama3-70b-8192">llama3-70b-8192</option>
+                <option value="llama3-8b-8192">llama3-8b-8192</option>
+            </select>
+            <button id="clear-memory-button">Clear Memory</button>
+        </div>
+    </div>
+    <div id="toast" class="toast hidden"></div>
     <div id="chat-container"></div>
 
     <div id="input-area">
         <textarea id="user-input" placeholder="Ask a question..."></textarea>
         <button id="send-button" title="Send">➤</button>
     </div>
-    <div id="taskBar">
-        <select id="model-select">
-            <!-- 
-            "meta-llama/llama-4-scout-17b-16e-instruct",
-            "meta-llama/llama-4-maverick-17b-128e-instruct",
-            "llama-3.3-70b-specdec",
-            "llama-3.3-70b-versatile",
-            "llama-3.1-8b-instant",
-            "llama3-70b-8192",
-            "llama3-8b-8192", -->
-            <option value="meta-llama/llama-4-scout-17b-16e-instruct">llama-4-scout-17b-16e-instruct</option>
-            <option value="meta-llama/llama-4-maverick-17b-128e-instruct">llama-4-maverick-17b-128e-instruct</option>
-            <option value="llama-3.3-70b-specdec">llama-3.3-70b-specdec</option>
-            <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
-            <option value="llama-3.1-8b-instant">llama-3.1-8b-instant</option>
-            <option value="llama3-70b-8192">llama3-70b-8192</option>
-            <option value="llama3-8b-8192">llama3-8b-8192</option>
-        </select>
-        <button id="clear-memory-button">Clear Memory</button>
-        <div id="clear-memory-status"></div>
-    </div>
+    
     
     <script src="purify.min.js"></script>
     <script src="marked.min.js"></script>
