@@ -16,9 +16,9 @@ def detect_language(text: str) -> str:
     """
     en_count, zh_count = count_chars(text)
 
-    if zh_count > 0 and zh_count >= en_count:
+    if zh_count > 0:
         final_lang = "zh"
-    else:
+    elif en_count > 0:
         final_lang = "en"
     return final_lang
 
