@@ -1,11 +1,11 @@
 /* iframe 樣式 */
 #w3c-ai-assistant-iframe {
     position: fixed;
-    top: 80px;
+    top: 50px;
     right: 20px;
     bottom: 40px;
     width: 480px;
-    height: calc(100vh - 130px);
+    height: calc(110vh - 130px);
     border: none;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -16,8 +16,8 @@
 /* 控制按鈕樣式 */
 #w3c-ai-toggle-button {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
+    right: 13px;
+    bottom: 10px;
     z-index: 10000;
     width: 40px;
     height: 40px;
