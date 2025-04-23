@@ -16,23 +16,27 @@
         console.log("✅ AI Assistant iframe injected.");
     }
     
-    // --- 注入控制按鈕(🤖) ---
+    // --- 注入控制按鈕 ---
     function injectToggleButton() {
         if (document.getElementById('w3c-ai-toggle-button')) {
             return; // 防止重複注入
         }
-
         const button = document.createElement('button');
         button.id = 'w3c-ai-toggle-button';
-        button.textContent = '🤖'; 
         button.title = 'Toggle Assistant';
+
+        // 設定按鈕背景圖片
+        button.style.backgroundImage = `url(${chrome.runtime.getURL('icons/icon128.png')})`;
+        button.style.backgroundSize = 'cover';
+        button.style.backgroundRepeat = 'no-repeat';
+        button.style.backgroundPosition = 'center';
+
         // 點擊切換 iframe 顯示
         button.addEventListener('click', () => {
             const iframe = document.getElementById('w3c-ai-assistant-iframe');
             if (!iframe) return;
             const visible = iframe.style.display !== 'none';
             iframe.style.display = visible ? 'none' : 'block';
-            button.textContent = visible ? '🤖' : '🤖'; // 可自行調整圖示
         });
         document.body.appendChild(button);
         console.log("✅ Toggle button injected.");

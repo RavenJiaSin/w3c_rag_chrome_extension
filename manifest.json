@@ -4,9 +4,9 @@
     "version": "1.0",
     "description": "提取W3C標準內容，並使用Chat AI回答相關問題。",
     "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
     },
     "permissions": [
         "storage",
@@ -39,7 +39,8 @@
             "sidebar.html",
             "sidebar.js",
             "marked.min.js",
-            "purify.min.js"
+            "purify.min.js",
+            "icons/*.png"
         ],
         "matches": ["<all_urls>"]
       }
