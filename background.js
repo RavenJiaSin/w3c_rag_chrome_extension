@@ -29,10 +29,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 return;
             }
 
-            // 建立 query_message 格式
-            // `這是使用者正在閱讀的文章：\n${pageContent}\n\n使用者提問：${userQuestion}`
-            const queryMessage = `優先搜尋：${pageTitle}\n使用者提問：${userQuestion}`;
-
             console.log("📨 傳送 query_message 至伺服器...");
             console.log("🧠 模型名稱:", modelName);
 
@@ -41,7 +37,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    query_message: queryMessage,
+                    title: pageTitle,
+                    query_message: userQuestion,
                     model_name: modelName,
                     page_content: pageContent,
                 })

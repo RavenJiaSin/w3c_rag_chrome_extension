@@ -11,7 +11,6 @@ from typing import Optional, List, Dict
 import json
 import chromadb
 import faiss
-import numpy as np
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from groq import Groq, RateLimitError, APIError
@@ -31,8 +30,8 @@ except ImportError:
 
 
 # Example extension ID, replace with your actual ID if needed for CORS
-extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
-# extension_ID = 'odmikollhnahmfohmdafkpnlfpopicmh'
+# extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
+extension_ID = 'odmikollhnahmfohmdafkpnlfpopicmh'
 
 # --- 1. Configuration ---
 logging.basicConfig(
@@ -75,12 +74,16 @@ TOP_K_CONTENT = 2
 TOP_K_HISTORY = 3
 SERVER_PORT = 5050
 
+# Evaluation data filename
+EVAL_DATA_FILENAME = "eval_data.json"
+
 # --- Global Application State ---
 app_state = {} # Dictionary to hold loaded resources
 
 # --- 2. Pydantic Models for Request Validation ---
 class RAGRequest(BaseModel):
     """Validates the incoming request body."""
+    title: str
     query_message: str
     model_name: str
     page_content: str
@@ -110,27 +113,9 @@ def count_chars(text: str) -> tuple[int, int]:
 
 def detect_language(text: str) -> str:
     """
-    Detects language ('en' or 'zh') using langdetect first, then falls back
-    to character counting for ambiguous cases. Defaults to 'en'.
+    Detects language ('en' or 'zh') primarily using character counting,
+    with langdetect as a fallback for ambiguous cases. Defaults to 'en'.
     """
-    detected_lang = None
-    try:
-        lang = detect(text)
-        if lang.startswith("zh"):
-            detected_lang = "zh"
-        elif lang == "en":
-            detected_lang = "en"
-        logging.debug(f"langdetect result: {lang}")
-    except LangDetectException:
-        logging.warning(
-            "Language detection by langdetect failed, falling back to char count."
-        )
-
-    if detected_lang:
-        logging.info(f"Language detected by langdetect: {detected_lang}")
-        return detected_lang
-
-    logging.info("langdetect inconclusive, performing character count analysis...")
     en_count, zh_count = count_chars(text)
     logging.debug(f"Character counts: EN={en_count}, ZH={zh_count}")
 
@@ -139,12 +124,21 @@ def detect_language(text: str) -> str:
     elif en_count > zh_count:
         final_lang = "en"
     else:
-        logging.warning(
-            "Character count analysis inconclusive, defaulting to 'en'."
-        )
-        final_lang = "en"
+        logging.info("Character count analysis inconclusive, falling back to langdetect.")
+        try:
+            lang = detect(text)
+            if lang.startswith("zh"):
+                final_lang = "zh"
+            elif lang == "en":
+                final_lang = "en"
+            else:
+                final_lang = "en"  # Default to English for unsupported languages
+            logging.debug(f"langdetect result: {lang}")
+        except LangDetectException:
+            logging.warning("Language detection by langdetect failed, defaulting to 'en'.")
+            final_lang = "en"
 
-    logging.info(f"Language determined by character count: {final_lang}")
+    logging.info(f"Language determined: {final_lang}")
     return final_lang
 
 def format_context(results: List[Dict]) -> str:
@@ -387,6 +381,36 @@ def preprocess_page_content_with_llm(client: Groq, query_message: str, page_cont
         # Handle cases where preprocessing failed or found nothing relevant
         logging.warning("Page content preprocessing failed or found no relevant content.")
         return "" # Return empty string
+    
+def log_eval_data(title: str, query: str, model_name: str, generated_response: str):
+    """將互動資訊記錄到 .json 檔案中，作為潛在的評估資料。"""
+    try:
+        entry = {
+            "id": title,
+            "query_message": query,
+            "model_name": model_name,
+            "generated_answer": generated_response,
+            "expected_answer": "",
+        }
+
+        # Load existing eval data if the file exists
+        if os.path.exists(EVAL_DATA_FILENAME):
+            with open(EVAL_DATA_FILENAME, "r", encoding="utf-8") as f:
+                eval_data = json.load(f)
+        else:
+            eval_data = {"eval_datas": []}
+
+        # Append the new entry to the eval_datas list
+        eval_data["eval_datas"].append(entry)
+
+        # Write the updated eval data back to the file
+        with open(EVAL_DATA_FILENAME, "w", encoding="utf-8") as f:
+            json.dump(eval_data, f, ensure_ascii=False, indent=4)
+
+        logging.debug(f"已將潛在評估資料記錄到 {EVAL_DATA_FILENAME}")
+
+    except Exception as e:
+        logging.error(f"記錄潛在評估資料時出錯: {e}")
 
 # --- 4. Global Resource Loading (Synchronous) ---
 logging.info("腳本啟動：正在全局同步載入資源...")
@@ -541,6 +565,7 @@ def perform_rag_flask():
              logging.error(f"解析請求 JSON 或驗證時出錯: {e}")
              return jsonify({"detail": "Invalid JSON request body or validation error"}), 400
 
+        title = request_data.title
         query_message = request_data.query_message
         target_model = request_data.model_name
         original_page_content = request_data.page_content # Get original page content
@@ -561,7 +586,7 @@ def perform_rag_flask():
                 else app_state["zh_embedding_model"]
             )
             logging.info(f"Embedding query using '{lang}' model...")
-            query_vector = embedding_model.encode([query_message])[0]
+            query_vector = embedding_model.encode([f"title：{title}\nquestion：{query_message}"])[0]
             logging.info(
                 f"Query embedding complete ({(time.time() - query_embedding_start_time):.2f}s)."
             )
@@ -618,7 +643,7 @@ def perform_rag_flask():
 
         # --- 6. Construct Final LLM Prompt (using both contexts) ---
         prompt = textwrap.dedent(f"""
-            You are a helpful AI assistant knowledgeable about W3C standards.
+            You are a helpful AI assistant knowledgeable about W3C standards. This question you should answer in {"Englsih" if lang == "en" else "Traditional Chinese"}.
             Carefully analyze BOTH the Retrieved Context from internal knowledge AND the relevant snippet from the User's Current Page Content.
             Provide a comprehensive and accurate answer based *only* on the provided information (both retrieved context and page content) and the user's question.
             If the necessary information isn't found in either source, state that clearly. Prioritize information from the Retrieved Context if there's overlap but mention if the page content offers additional relevant details.
@@ -640,20 +665,21 @@ def perform_rag_flask():
             **Answer:**
         """)
         logging.debug(f"Final Prompt for LLM (start):\n{prompt[:600]}...")
-        # --- TODO: Implement Token counting for the FINAL prompt and truncate if exceeds MAX_PROMPT_TOKENS ---
-        # final_prompt_tokens = len(app_state["tokenizer"].encode(prompt)) if app_state.get("tokenizer") else len(prompt) // 3 # Rough estimate
-        # if final_prompt_tokens > MAX_PROMPT_TOKENS:
-        #     logging.warning(f"Final prompt tokens ({final_prompt_tokens}) exceed limit ({MAX_PROMPT_TOKENS}). Truncation needed (logic not fully implemented).")
-            # Implement logic here to shorten formatted_retrieved_context or processed_page_content further
-            # E.g., take fewer retrieved results, shorten the processed content more aggressively.
-
 
         # --- 7. Call Target LLM (Synchronous) ---
         logging.info(f"Sending request to Groq LLM ({target_model} or fallback)...")
         llm_response = call_groq_llm_sync(
             app_state["groq_client"], prompt, target_model
         )
-        if not llm_response:
+
+        if llm_response:
+            log_eval_data(
+                title=title,
+                query=query_message,
+                model_name=target_model,
+                generated_response=llm_response
+            )
+        elif not llm_response:
             return jsonify({"detail": "Failed to get response from LLM"}), 500
 
         # --- 8. Update Message History (Background Thread) ---
