@@ -1,7 +1,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     margin: 0;
-    padding: 15px;
+    padding: 13px;
     font-size: 14px;
     height: 100vh;
     display: flex;
@@ -23,7 +23,7 @@ body {
 
 h2 {
     width: fit-content;
-    font-size: 1.2em;
+    font-size: 1.4em;
     color: #111;
 }
 
@@ -47,7 +47,7 @@ h2 {
 #clear-memory-button {
     width: 90px;
     height: 30px;
-    background-color: #1a5e9a;
+    background-color: #1b6fd0;
     color: white;
     border: none;
     border-radius: 8px;
@@ -55,7 +55,7 @@ h2 {
     font-size: 0.8em;
 }
 #clear-memory-button:hover {
-    background-color: #2a7dc6;
+    background-color: #064cb5;
 }
 #clear-memory-button:disabled {
     background-color: #7c91a3;
@@ -63,6 +63,7 @@ h2 {
 
 .toast {
     position: fixed;
+    width: fit-content;
     top: 75px;
     left: 160px;
     background-color: #323232;
@@ -114,7 +115,7 @@ h2 {
 /* 使用者訊息靠右、背景色 */
 .message.user {
     align-self: flex-end;
-    background-color: #1a5e9a;
+    background-color: #1b6fd0;
     color: white;
     border-bottom-right-radius: 0;
 }
@@ -229,18 +230,18 @@ textarea {
 
 #user-input {
     width: 100%;
-    height: 50px;
+    height: 45px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
     resize: none;
 }
 
 #send-button {
-    width: 50px;
-    height: 50px;
-    background-color: #1a5e9a;
+    width: 45px;
+    height: 45px;
+    background-color: #1b6fd0;
     color: white;
     font-size: 20px;
     border: none;
@@ -250,7 +251,7 @@ textarea {
 }
 
 #send-button:hover {
-    background-color: #2a7dc6;
+    background-color: #064cb5;
 }
 #send-button:disabled {
     background-color: #7c91a3;

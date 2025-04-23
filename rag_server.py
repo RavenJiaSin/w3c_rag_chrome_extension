@@ -30,8 +30,8 @@ except ImportError:
 
 
 # Example extension ID, replace with your actual ID if needed for CORS
-# extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
-extension_ID = 'odmikollhnahmfohmdafkpnlfpopicmh'
+extension_ID = 'plmphbheelmdnicgehmagnlhfahgjkme'
+# extension_ID = 'odmikollhnahmfohmdafkpnlfpopicmh'
 
 # --- 1. Configuration ---
 logging.basicConfig(
@@ -119,9 +119,9 @@ def detect_language(text: str) -> str:
     en_count, zh_count = count_chars(text)
     logging.debug(f"Character counts: EN={en_count}, ZH={zh_count}")
 
-    if zh_count > 0:
+    if zh_count > 0 and zh_count >= en_count:
         final_lang = "zh"
-    elif en_count > 0:
+    elif en_count > zh_count:
         final_lang = "en"
     else:
         logging.info("Character count analysis inconclusive, falling back to langdetect.")

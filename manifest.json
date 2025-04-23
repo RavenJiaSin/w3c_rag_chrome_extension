@@ -3,6 +3,11 @@
     "name": "W3C AI 助手",
     "version": "1.0",
     "description": "提取W3C標準內容，並使用Chat AI回答相關問題。",
+    "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+    },
     "permissions": [
         "storage",
         "activeTab",
