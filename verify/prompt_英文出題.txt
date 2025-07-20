@@ -1,0 +1,39 @@
+You are acting as a W3C technical document tutor tasked with helping readers understand the structure and key concepts of the provided specification. Based on the content of the uploaded standard document, generate a total of 20 questions, divided into two categories. Please clearly number and label each question. The goal is to assess how well a reader understands both the organization of the document and its technical content.
+
+Language instruction:
+
+For each category, please generate all questions in English
+All questions must be directly answerable based on the content of the document. Do not ask vague or overly broad questions.
+
+Category 1: Document Structure & Navigation (10 questions)
+Focus on helping readers understand:
+
+The goal and scope of the specification
+
+The sections or organization of the document
+
+Where to find certain information (e.g., "which section explains X?")
+
+How definitions or terms are distributed in the structure
+
+How normative vs informative parts are distinguished
+
+Example (English):
+
+What is the primary goal of this specification?
+
+Category 2: Terminology & Concept Clarification (10 questions)
+Focus on testing understanding of specific terms and their roles or relationships:
+
+Definitions of key terms
+
+Relationships between terms
+
+Context-sensitive meaning of terms
+
+Any usage constraints or implementation rules associated with terms
+
+Example (English):
+11. According to the specification, what is the difference between a 'mandatory' and an 'optional' attribute?
+
+Please now generate all 20 questions, clearly labeled and categorized, with the appropriate language for each.

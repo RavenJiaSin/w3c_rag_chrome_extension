@@ -1,0 +1,138 @@
+✅ Prompt 1：Accuracy（正確性）
+Please perform a detailed, question-by-question evaluation of system-generated answers contained in the file:
+“英文提問與回覆對照表.pdf”
+These answers are responses to questions based on the source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+Your task is to evaluate the accuracy of each answer strictly according to the source document.
+
+For each of the 20 question-answer pairs:
+
+Check whether the answer content is factually correct according to the document.
+
+Verify if claims such as “not found” or “undefined” are truly supported by the source.
+
+Assign a score:
+
+2 = Fully accurate and aligned with the document
+
+1 = Partially correct, with some omissions or minor errors
+
+0 = Incorrect or contradicts the document
+
+Explain your decision briefly.
+
+Your analysis must be written in Traditional Chinese, and presented in this format:
+
+問題編號：Q1  
+正確性 Accuracy：X  
+原因：……  
+
+✅ Prompt 2：Language Match（語言一致性）
+Please evaluate whether the system-generated answers in:
+“英文提問與回覆對照表.pdf”
+are written in the same language as the question, which is English.
+
+For each of the 20 question-answer pairs:
+
+Determine if the answer is entirely in English.
+
+Check for inappropriate or unexpected language mixing (e.g., Chinese or other languages).
+
+Assign a score:
+
+2 = Entirely in English
+
+1 = Mostly English with minor mixing
+
+0 = Not in English or heavily mixed
+
+Briefly explain your reasoning.
+
+Please write your evaluation in Traditional Chinese, using the following format:
+
+問題編號：Q1  
+語言一致性 Language Match：X  
+原因：…… 
+ 
+✅ Prompt 3：Reference Grounding（引用依據）
+Evaluate whether each answer in the file:
+“英文提問與回覆對照表.pdf”
+is clearly grounded in the official source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+For each of the 20 question-answer pairs:
+
+Identify if the answer references, paraphrases, or clearly reflects the content from the source.
+
+Assess if there’s evidence that the answer comes from the document.
+
+Assign a score:
+
+2 = Clearly grounded in the document
+
+1 = Vague or weak grounding
+
+0 = Not grounded at all
+
+Explain your scoring briefly.
+
+Your response must be in Traditional Chinese, and follow this format:
+
+問題編號：Q1  
+引用依據 Reference Grounding：X  
+原因：……  
+
+✅ Prompt 4：Clarity（清楚程度）
+Evaluate the clarity of each answer in:
+“英文提問與回覆對照表.pdf”, in the context of the source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+For each of the 20 question-answer pairs:
+
+Assess whether the answer is easy to understand, logically structured, and readable.
+
+Look for confusing wording or unclear logic.
+
+Assign a score:
+
+2 = Very clear and easy to follow
+
+1 = Somewhat clear but improvable
+
+0 = Confusing or poorly written
+
+Give a short explanation.
+
+Respond in Traditional Chinese, with this format:
+
+問題編號：Q1  
+清楚程度 Clarity：X  
+原因：……  
+
+✅ Prompt 5：Format Compliance（格式正確性）
+Evaluate the format and structure of each answer in:
+“英文提問與回覆對照表.pdf”, with reference to the content expectations from:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+For each of the 20 question-answer pairs:
+
+Check whether the response is well-structured, concise, and technically appropriate.
+
+Identify unnecessary length, lack of structure, or irrelevant content.
+
+Assign a score:
+
+2 = Proper format and focused
+
+1 = Minor formatting issues
+
+0 = Poorly structured or irrelevant
+
+Provide a short explanation.
+
+Your response must be in Traditional Chinese, using this format:
+
+問題編號：Q1  
+格式正確性 Format Compliance：X  
+原因：……  

@@ -1,0 +1,154 @@
+✅ Prompt 1: Accuracy（正確性）
+Please perform a detailed, question-by-question evaluation of system-generated answers contained in the file:
+“中文提問與回覆對照表.pdf”
+These answers are responses to questions based on the source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+Your task is to evaluate the accuracy of each answer strictly according to the source document content.
+
+For each of the 20 question-answer pairs:
+
+Locate the relevant content in the source document.
+
+Determine whether the answer is factually accurate.
+
+Assign a score:
+
+2 = Fully correct and consistent with the source
+
+1 = Partially correct, with some errors or missing details
+
+0 = Incorrect or contradicts the document
+
+Explain briefly why you assigned that score.
+
+Important instructions:
+
+Do not assume any knowledge beyond the MathML 4.0 document.
+
+If an answer claims something is “not found” or “not defined”, you must check whether it’s true.
+
+If needed, quote or summarize the relevant content in your explanation.
+
+Respond in Traditional Chinese, using this format per question:
+
+問題編號：Q1  
+正確性 Accuracy：2  
+原因：……  
+  
+問題編號：Q2  
+正確性 Accuracy：1  
+原因：……  
+（依此類推到 Q20）
+
+✅ Prompt 2：Language Match（語言一致性）
+Please perform a detailed, question-by-question evaluation of system-generated answers contained in the file:
+“中文提問與回覆對照表.pdf”
+These answers are responses to questions based on the source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+Your task is to evaluate whether each answer is written in the same language as the question, which is Traditional Chinese.
+
+For each of the 20 question-answer pairs:
+
+Determine if the answer is fully written in Traditional Chinese.
+
+Check for any inappropriate use of foreign languages (e.g. English).
+
+Assign a score:
+
+2 = Fully in Traditional Chinese
+
+1 = Mostly in Chinese, with minor language mixing
+
+0 = Wrong language or significantly mixed language
+
+Briefly explain your reasoning.
+
+Respond in Traditional Chinese, using this format per question:
+
+問題編號：Q1  
+語言一致性 Language Match：2  
+原因：……  
+
+✅ Prompt 3：Reference Grounding（引用依據）
+Please evaluate each system-generated answer in the file:
+“中文提問與回覆對照表.pdf”
+in relation to the content of the source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+Your goal is to assess how well each answer is grounded in the source document.
+
+For each of the 20 question-answer pairs:
+
+Determine whether the answer refers to or clearly aligns with specific content from the document (e.g., definitions, terms, sections).
+
+Assign a score:
+
+2 = Clearly grounded in content from the document
+
+1 = Somewhat related, but without clear reference
+
+0 = Not based on or inconsistent with the source
+
+Provide a short explanation referencing or paraphrasing any relevant sections when possible.
+
+Respond in Traditional Chinese, using this format per question:
+
+問題編號：Q1  
+引用依據 Reference Grounding：1  
+原因：……  
+
+✅ Prompt 4：Clarity（清楚程度）
+Based on the answers in the file:
+“中文提問與回覆對照表.pdf”, evaluate each answer’s clarity and readability, considering the context of the source document:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+For each of the 20 question-answer pairs:
+
+Assess whether the answer is well-structured, logically presented, and easy to understand.
+
+Identify any awkward phrasing, ambiguity, or unnecessary complexity.
+
+Assign a score:
+
+2 = Very clear and easy to understand
+
+1 = Somewhat clear, but could be improved
+
+0 = Confusing or poorly written
+
+Explain your reasoning briefly.
+
+Respond in Traditional Chinese, using this format per question:
+
+問題編號：Q1  
+清楚程度 Clarity：1  
+原因：…… 
+ 
+✅ Prompt 5：Format Compliance（格式正確性）
+Based on the file:
+“中文提問與回覆對照表.pdf”, evaluate each answer for format and presentation quality, referencing the context of:
+“Mathematical Markup Language (MathML) Version 4.0.pdf”
+
+For each of the 20 question-answer pairs:
+
+Assess whether the answer is concise, focused, technically appropriate, and free of unnecessary content.
+
+Check if formatting is consistent and suitable for a technical audience.
+
+Assign a score:
+
+2 = Proper format and concise structure
+
+1 = Minor formatting or presentation issues
+
+0 = Poorly formatted or off-topic
+
+Provide a short explanation.
+
+Respond in Traditional Chinese, using this format per question:
+
+問題編號：Q1  
+格式正確性 Format Compliance：2  
+原因：……  
