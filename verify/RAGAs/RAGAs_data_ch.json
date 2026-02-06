@@ -1,0 +1,602 @@
+[
+  {
+    "user_input": "MathML 4.0 的主要目標是什麼？",
+    "response": "",
+    "contexts": "MathML is a markup language for describing mathematical notation and capturing both its structure and content. The goal of MathML is to enable mathematics to be served, received, and processed on the World Wide Web, just as [HTML] has enabled this functionality for text. [1]",
+    "ground_truths": "MathML 4.0 的目標是作為一種描述數學符號及其結構與內容的標記語言，使數學能夠像 HTML 處理文本一樣，在全球資訊網（WWW）上進行服務、接收與處理。[1]"
+  },
+  {
+    "user_input": "MathML 規範主要針對哪些讀者群體？",
+    "response": "",
+    "contexts": "This specification of the markup language MathML is intended primarily for a readership consisting of those who will be developing or implementing renderers or editors using it, or software that will communicate using MathML as a protocol for input or output. It is not a User's Guide but rather a reference document. [2]",
+    "ground_truths": "該規範主要針對開發或實現渲染器、編輯器，以及使用 MathML 作為輸入或輸出協議進行通訊的軟體開發者；它是一份參考文獻，而非使用者指南。[2]"
+  },
+  {
+    "user_input": "MathML 標記包含哪兩種主要類型？其用途分別為何？",
+    "response": "",
+    "contexts": "Conceptually, MathML consists of two main strains of markup: Presentation markup is used to display mathematical expressions; and Content markup is used to convey mathematical meaning. [3]",
+    "ground_truths": "MathML 包含呈現標記（Presentation markup）和內容標記（Content markup）。呈現標記用於顯示數學表達式，而內容標記用於傳遞數學含義。[3]"
+  },
+  {
+    "user_input": "MathML Core 與 MathML Full 之間的關係是什麼？",
+    "response": "",
+    "contexts": "MathML Core ([MathML-Core]) covers (most of) Presentation Markup, with the focus being the precise details of displaying mathematics in web browsers. MathML Full, this specification, extends MathML Core primarily by defining Content MathML... It is intended that MathML Full is a proper superset of MathML Core. [4], [5]",
+    "ground_truths": "MathML Core 專注於瀏覽器顯示數學的精確細節；而 MathML Full 是 MathML Core 的超集，它擴展了內容標記（Content MathML）以及一些為了相容舊版或特殊排版需求而設計的元素與屬性。[4], [5]"
+  },
+  {
+    "user_input": "MathML 的官方命名空間 URI 是什麼？",
+    "response": "",
+    "contexts": "The URI for the MathML namespace is: http://www.w3.org/1998/Math/MathML [6]",
+    "ground_truths": "MathML 的官方命名空間 URI 為 http://www.w3.org/1998/Math/MathML。[6]"
+  },
+  {
+    "user_input": "在 HTML 中嵌入 MathML 時，為什麼不應該使用命名空間前綴（如 <m:math>）？",
+    "response": "",
+    "contexts": "HTML does not support namespace extensibility in the same way. The HTML parser has in-built knowledge of the HTML, SVG, and MathML namespaces. Thus, when using the HTML serialisation of MathML, prefixed element names must not be used. [7]",
+    "ground_truths": "因為 HTML 解析器僅內建支援特定的命名空間（HTML, SVG, MathML），且不支援像 XML 那樣的命名空間擴充或前綴；在 HTML 中使用前綴會導致解析錯誤。[7]"
+  },
+  {
+    "user_input": "什麼是「推斷的 mrow」（Inferred mrow）？",
+    "response": "",
+    "contexts": "There are presentation elements that conceptually accept only a single argument, but which for convenience have been written to accept any number of children; then we infer an mrow containing those children which acts as the argument to the element in question. [8]",
+    "ground_truths": "當某些僅接受單一參數的元素（如 msqrt, mstyle 等）被寫入多個子元素時，系統會自動推斷出一個包含這些子元素的 mrow，並將其作為該元素的實際參數。[8]"
+  },
+  {
+    "user_input": "MathML 如何定義屬性值中的「布林值」（boolean）？",
+    "response": "",
+    "contexts": "boolean As defined in [MathML-Core], a string that is an ASCII case-insensitive match to true or false. [9]",
+    "ground_truths": "在 MathML 中，布林值是指一個與 \"true\" 或 \"false\" 進行 ASCII 大小寫不敏感匹配的字串。[9]"
+  },
+  {
+    "user_input": "在 MathML 4.0 中，原本 MathML 3 支援的 mpadded 偽單位（如 height, depth, width）目前的狀態為何？",
+    "response": "",
+    "contexts": "In MathML 3, the attributes on mpadded allowed three pseudo-units, height, depth, and width... These forms are considered invalid in MathML 4. [10]",
+    "ground_truths": "在 MathML 4.0 中，mpadded 屬性不再支援 height, depth 和 width 這些偽單位，這些形式現在被視為無效。[10]"
+  },
+  {
+    "user_input": "屬性的「繼承值」（inherited）與「自動計算值」（automatic）有何區別？",
+    "response": "",
+    "contexts": "Default values described as inherited are taken from the rendering environment... Default values described as automatic should be computed by a MathML renderer in a way which will produce a high-quality rendering... it will usually depend on the element content and possibly on the context. [11], [12]",
+    "ground_truths": "「繼承值」是從渲染環境或父元素獲取的；而「自動計算值」則由渲染器根據元素內容及上下文自行計算，以產生高品質的渲染效果。[11], [12]"
+  },
+  {
+    "user_input": "MathML 如何處理符記元素（Token Elements）之外的空白字元？",
+    "response": "",
+    "contexts": "MathML ignores whitespace occurring outside token elements. Non-whitespace characters are not allowed there. [13]",
+    "ground_truths": "MathML 會忽略符記元素（如 mi, mn, mo 等）之外的所有空白字元，且該處不允許出現非空白字元。[13]"
+  },
+  {
+    "user_input": "在符記元素內部，空白字元是如何進行標準化處理的？",
+    "response": "",
+    "contexts": "All whitespace at the beginning and end of the content is removed, and whitespace internal to content of the element is collapsed canonically, i.e., each sequence of 1 or more whitespace characters is replaced with one space character (U+0020). [13]",
+    "ground_truths": "符記元素內容開頭和結尾的空白會被移除，內部的空白序列則會被合併為一個單一的空格（U+0020）。[13]"
+  },
+  {
+    "user_input": "如果作者希望在 mtext 中保留前後的空格，應該使用什麼字元？",
+    "response": "",
+    "contexts": "Authors wishing to encode white space characters at the start or end of the content of a token... must use non-breaking space U+00A0 (or nbsp) or other non-marking characters that are not trimmed. [14]",
+    "ground_truths": "作者必須使用不換行空格（U+00A0, nbsp）或其他不會被修剪的非標記字元。[14]"
+  },
+  {
+    "user_input": "根元素 <math> 的 display 屬性有哪些取值？其意義為何？",
+    "response": "",
+    "contexts": "displaycore \"block\" | \"inline\" inline specifies whether the enclosed MathML expression should be rendered as a separate vertical block (in display style) or inline, aligned with adjacent text. [15]",
+    "ground_truths": "取值包括 \"block\" 和 \"inline\"。\"block\" 表示將公式渲染為獨立的垂直區塊；\"inline\" 則表示將公式與相鄰文本對齊顯示。[15]"
+  },
+  {
+    "user_input": "當公式長度超過可用寬度時，overflow 屬性的 \"elide\" 值代表什麼行為？",
+    "response": "",
+    "contexts": "\"elide\" The display is abbreviated by removing enough of it so that the remainder fits into the window. For example, a large polynomial might have the first and last terms displayed with “+ ... +” between them. [16]",
+    "ground_truths": "\"elide\" 會移除公式中的部分內容以縮短顯示，使剩餘部分能放入視窗內（例如長多項式僅顯示首末項並以 \"+ ... +\" 連接）。[16]"
+  },
+  {
+    "user_input": "主要的 MathML 符記元素（Token Elements）類型有哪些？",
+    "response": "",
+    "contexts": "The primary MathML token element types are identifiers (mi, e.g. variables or function names), numbers (mn), and operators (mo, including fences, such as parentheses, and separators, such as commas). [17]",
+    "ground_truths": "主要的符記元素包括標識符（mi，如變數或函數名）、數字（mn）以及運算符（mo，包括括號和逗號等）。[17]"
+  },
+  {
+    "user_input": "MathML 支援哪兩種不同的方向性（Directionality）？",
+    "response": "",
+    "contexts": "MathML 3.0 therefore recognizes two distinct directionalities: the directionality of the text and symbols within token elements and the overall directionality represented by Layout Schemata. [18]",
+    "ground_truths": "MathML 支援兩種方向性：符記元素內部文字與符號的方向性，以及佈局架構（Layout Schemata）所代表的整體方向性。[18]"
+  },
+  {
+    "user_input": "在 RTL（從右至左）佈局中，根號（root）的 surd 符號會顯示在哪一側？",
+    "response": "",
+    "contexts": "For example, in a RTL layout... the surd for a root appears at the right, with the bar continuing over the base to the left. [19]",
+    "ground_truths": "在 RTL 佈局中，根號的 surd 符號會顯示在右側，而橫線則向左延伸覆蓋基底。[19]"
+  },
+  {
+    "user_input": "displaystyle 屬性對公式呈現有什麼影響？",
+    "response": "",
+    "contexts": "The displaystyle affects the amount of vertical space used to lay out a formula: when true, the more spacious layout of displayed equations is used, whereas when false a more compact layout of inline formula is used. [20]",
+    "ground_truths": "當 displaystyle 為 true 時，會使用較寬敞的顯示模式佈局；當為 false 時，則使用較緊湊的行內模式佈局。[20]"
+  },
+  {
+    "user_input": "scriptlevel 屬性的主要作用是什麼？",
+    "response": "",
+    "contexts": "The main effect of scriptlevel is to control the font size. Typically, the higher the scriptlevel, the smaller the font size. [20]",
+    "ground_truths": "scriptlevel 的主要作用是控制字體大小。通常情況下，層級越高，字體越小。[20]"
+  },
+  {
+    "user_input": "如何指定強制換行（Forced linebreak）？",
+    "response": "",
+    "contexts": "Forced linebreaks are specified by using linebreak=newline on an mo or mspace element. [21]",
+    "ground_truths": "可以透過在 mo 或 mspace 元素上使用 linebreak=newline 屬性來指定強制換行。[21]"
+  },
+  {
+    "user_input": "呈現標記中的 mathcolor 屬性有什麼用途？",
+    "response": "",
+    "contexts": "mathcolorcore color inherited Specifies the foreground color to use when drawing the components of this element, such as the content for token elements or any lines, surds, or other decorations. [22]",
+    "ground_truths": "mathcolor 用於指定元素組件的前景色，包括符記元素的內容，或是線條、根號及其他裝飾符號。[22]"
+  },
+  {
+    "user_input": "呈現元素中的 mathvariant 屬性有什麼作用？",
+    "response": "",
+    "contexts": "The mathvariant attribute defines logical classes of token elements. Each class provides a collection of typographically-related symbolic tokens. Each token has a specific meaning within a given mathematical expression. [23]",
+    "ground_truths": "mathvariant 定義了符記元素的邏輯類別，用於區分具有特定數學含義的視覺風格（如粗體、斜體、德文尖角體），保護其不被全局樣式更改。[23]"
+  },
+  {
+    "user_input": "如果 mi 元素的內容是單一字元，其 mathvariant 的預設值為何？",
+    "response": "",
+    "contexts": "the mathvariant attribute... the default value is normal (non-slanted) for all tokens except for mi with single-character content. [24], [25]",
+    "ground_truths": "對於 mi 元素，如果內容是單一字元，其預設值為斜體（italic）；其餘情況預設為正常體（normal）。[24], [25]"
+  },
+  {
+    "user_input": "mn 元素主要用來表示什麼？有哪些情況不建議單獨使用 mn？",
+    "response": "",
+    "contexts": "An mn element represents a “numeric literal”... Many mathematical numbers should be represented using presentation elements other than mn alone; this includes complex numbers, negative numbers, ratios of numbers shown as fractions, and names of numeric constants. [26], [27]",
+    "ground_truths": "mn 表示數字字面量。複數、負數、分數比例以及數學常數名稱（如 pi）不建議單獨使用 mn 表示。[26], [27]"
+  },
+  {
+    "user_input": "mo 元素的「運算符字典」（Operator Dictionary）有什麼功能？",
+    "response": "",
+    "contexts": "A key feature of the mo element is that its default attribute values are set on a case-by-case basis from an “operator dictionary”... In particular, default value for stretch, symmetric and accent can usually be found in the operator dictionary. [28]",
+    "ground_truths": "運算符字典根據 mo 元素的內容和形式提供預設屬性值，如是否可拉伸（stretchy）、是否對稱（symmetric）以及是否作為重音符號（accent）。[28]"
+  },
+  {
+    "user_input": "什麼是「加飾運算符」（Embellished operator）？",
+    "response": "",
+    "contexts": "An mo element that is “embellished” by one or more nested subscripts, superscripts, surrounding text or whitespace, or style changes behaves differently. It is the embellished operator as a whole... whose position in an mrow is examined. [29]",
+    "ground_truths": "指一個 mo 元素被下標、上標、周圍文本、空白或樣式變化所包圍後構成的整體表達式；在確定位置形式時會將其視為一個整體的運算符。[29]"
+  },
+  {
+    "user_input": "stretchy 屬性為 true 時，mo 元素會如何表現？",
+    "response": "",
+    "contexts": "If an operator has the attribute stretchy=true, then it (that is, each character in its content) obeys the stretching rules... so that it matches the size of other elements. [30]",
+    "ground_truths": "當 stretchy 為 true 時，運算符會根據規則進行拉伸，以匹配相鄰元素的大小。[30]"
+  },
+  {
+    "user_input": "symmetric 屬性的作用是什麼？它適用於所有運算符嗎？",
+    "response": "",
+    "contexts": "The symmetric attribute governs whether the height and depth above and below the axis of the character are forced to be equal... The symmetric attribute only applies to characters that stretch vertically. [31]",
+    "ground_truths": "symmetric 用於強制使垂直拉伸的字元相對於數學軸心的上方高度與下方深度相等；它僅適用於垂直拉伸的字元。[31]"
+  },
+  {
+    "user_input": "mtext 與 mspace 元素的主要區別是什麼？",
+    "response": "",
+    "contexts": "An mtext element is used to represent arbitrary text that should be rendered as itself... An mspace empty element represents a blank space of any desired size, as set by its attributes. [32], [33]",
+    "ground_truths": "mtext 用於表示註解性質的任意文本；mspace 則是一個空元素，用於產生指定尺寸的空白區域。[32], [33]"
+  },
+  {
+    "user_input": "哪些元素被定義為「類空白」（space-like）元素？",
+    "response": "",
+    "contexts": "The following MathML elements are defined to be “space-like”: an mtext element that is empty or all characters are spacing; an mspace, maligngroup, or malignmark; an mstyle, mphantom, or mpadded whose sub-expressions are space-like. [34], [35]",
+    "ground_truths": "包括空的或僅含空白字元的 mtext、mspace、maligngroup、malignmark，以及所有子元素均為類空白的 mstyle, mphantom 或 mpadded 等。[34], [35]"
+  },
+  {
+    "user_input": "mrow 元素的作用是什麼？",
+    "response": "",
+    "contexts": "An mrow or a element is used to group together any number of sub-expressions, usually consisting of one or more mo elements acting as “operators” on one or more other expressions that are their “operands”. [36]",
+    "ground_truths": "mrow（或 a）元素用於將任意數量的子表達式分組，通常包含運算符及其運算對象。[36]"
+  },
+  {
+    "user_input": "mfrac 元素如何影響其子元素的 scriptlevel？",
+    "response": "",
+    "contexts": "The mfrac element sets displaystyle to false, or if it was already false increments scriptlevel by 1, within numerator and denominator. [37]",
+    "ground_truths": "mfrac 會將分子和分母的 displaystyle 設為 false，如果原本即為 false，則會將它們的 scriptlevel 加 1。[37]"
+  },
+  {
+    "user_input": "msqrt 與 mroot 的語法差異為何？",
+    "response": "",
+    "contexts": "The mroot element requires exactly 2 arguments. However, msqrt accepts a single argument, possibly being an inferred mrow. [38]",
+    "ground_truths": "mroot 固定需要 2 個參數（基底和指數）；而 msqrt 接受單一參數（或推斷的 mrow）。[38]"
+  },
+  {
+    "user_input": "merror 元素的設計意圖是什麼？",
+    "response": "",
+    "contexts": "The intent of this element is to provide a standard way for programs that generate MathML from other input to report syntax errors in their input. [39]",
+    "ground_truths": "其意圖是為那些從其他輸入生成 MathML 的程式提供一種標準方式，用來報告輸入中的語法錯誤。[39]"
+  },
+  {
+    "user_input": "mpadded 元素的主要功能是什麼？",
+    "response": "",
+    "contexts": "An mpadded element renders the same as its child content, but with the size of the child's bounding box and the relative positioning point of its content modified. [40]",
+    "ground_truths": "mpadded 用於調整其子內容邊框的大小及內容的相對定位點，通常用於增加內容周圍的間距。[40]"
+  },
+  {
+    "user_input": "mphantom 元素的作用為何？",
+    "response": "",
+    "contexts": "The mphantom element renders invisibly, but with the same size and other dimensions, including baseline position, that its contents would have if they were rendered normally. [41]",
+    "ground_truths": "mphantom 會使其內容不可見，但保留其正常渲染時所佔用的空間大小、維度及基線位置，常用於對齊表達式。[41]"
+  },
+  {
+    "user_input": "mfenced 元素在 MathML 4.0 中與 mrow 的等效性為何？",
+    "response": "",
+    "contexts": "Individual fences or separators are represented using mo elements... any mfenced element is completely equivalent to an expanded form [using mrow]. [42]",
+    "ground_truths": "mfenced 僅是為了方便而存在的簡寫形式，它完全等效於使用 mrow 與 mo（代表圍欄和分隔符）所構成的展開形式。[42]"
+  },
+  {
+    "user_input": "menclose 元素的作用是什麼？哪些 notation 值已被棄用？",
+    "response": "",
+    "contexts": "The menclose element renders its content inside the enclosing notation... MathML 4 deprecates the use of longdiv and radical. [43], [44]",
+    "ground_truths": "menclose 用於將內容置於特定的標記符號（如圓圈、方框、刪除線）之中。在 MathML 4.0 中，\"longdiv\" 和 \"radical\" 已被棄用。[43], [44]"
+  },
+  {
+    "user_input": "mmultiscripts 元素如何同時支援後置腳標與前置腳標？",
+    "response": "",
+    "contexts": "This element allows the representation of any number of vertically-aligned pairs of subscripts and superscripts... The list is optionally followed by an empty element mprescripts and a list of... prescripts. [45], [46]",
+    "ground_truths": "該元素先列出基底及其後置腳標對，然後可以使用選用的 `<mprescripts/>` 空元素作為分隔，其後列出的腳標對則會被視為前置腳標。[45], [46]"
+  },
+  {
+    "user_input": "mtable 中如果某行的列數少於其他行，會如何處理？",
+    "response": "",
+    "contexts": "Table rows that have fewer columns than other rows of the same table... are effectively padded... with empty mtd elements. [47]",
+    "ground_truths": "列數較少的行會自動在右側（或 RTL 中的左側）填充空的 mtd 元素，直到列數與最長行相等。[47]"
+  },
+  {
+    "user_input": "MathML 如何支援數學公式的自動編號（Equation Numbering）？",
+    "response": "",
+    "contexts": "While automatic equation numbering... is outside the scope of MathML, these problems can be addressed by the use of style sheets or other means. In a CSS context, one could use CSS counters. [48]",
+    "ground_truths": "自動編號本身超出了 MathML 的規範範疇，但可以透過 CSS 計數器（counters）或其他樣式表技術來實現。[48]"
+  },
+  {
+    "user_input": "基礎數學（Elementary Math）排版中，mstack 的作用是什麼？",
+    "response": "",
+    "contexts": "mstack is used to lay out rows of numbers that are aligned on each digit. This is common in many elementary math notations such as 2D addition. [49]",
+    "ground_truths": "mstack 用於對齊多行數字的每一位數，常見於垂直相加、相減或相乘等基礎數學運算排版。[49]"
+  },
+  {
+    "user_input": "內容標記（Content Markup）的基本原則是什麼？",
+    "response": "",
+    "contexts": "The purpose of Content Markup is to provide an explicit encoding of the underlying mathematical meaning of an expression, rather than any particular notation. [50]",
+    "ground_truths": "內容標記旨在提供表達式底層數學含義的顯式編碼，而非針對特定的顯示符號。[50]"
+  },
+  {
+    "user_input": "嚴謹內容標記（Strict Content MathML）與 OpenMath 有何關係？",
+    "response": "",
+    "contexts": "Strict Content MathML is designed to be compatible with OpenMath, a standard for representing formal mathematical objects and semantics. Strict Content MathML is an XML encoding of OpenMath Objects. [51]",
+    "ground_truths": "嚴謹內容標記被設計為與 OpenMath 相容，它是 OpenMath 對象的一種 XML 編碼方式。[51]"
+  },
+  {
+    "user_input": "內容標記中的 <cn> 元素代表什麼？",
+    "response": "",
+    "contexts": "The cn element is the Content MathML element used to represent numbers. Strict Content MathML supports integers, real numbers, and double precision floating point numbers. [52]",
+    "ground_truths": "`<cn>` 用於表示數值量。嚴謹模式下支援整數、實數及雙精度浮點數。[52]"
+  },
+  {
+    "user_input": "在內容標記中，如何區分「變數」（variable）與「符號」（symbol）？",
+    "response": "",
+    "contexts": "Content MathML uses the ci element to represent variable identifiers... In MathML, variables are distinguished from symbols, which have fixed, external definitions, and are represented by the csymbol element. [53], [54]",
+    "ground_truths": "變數使用 `<ci>` 表示，代表沒有預定值的量；符號則使用 `<csymbol>` 表示，代表具有固定且外部定義的對象（如加法函數或 sine 函數）。[53], [54]"
+  },
+  {
+    "user_input": "內容標記中的 <apply> 元素有何用途？",
+    "response": "",
+    "contexts": "In MathML, the apply element is used to build an expression tree that represents the application of a function or operator to its arguments. [55]",
+    "ground_truths": "`<apply>` 用於構建表達式樹，表示將函數或運算符應用於一組參數。[55]"
+  },
+  {
+    "user_input": "什麼是「結構共享」（Structure Sharing）？",
+    "response": "",
+    "contexts": "To conserve space in the XML encoding, MathML expression trees can make use of structure sharing. The share element has an src attribute used to reference a MathML expression tree. [56]",
+    "ground_truths": "這是一種節省 XML 編碼空間的機制，透過 `<share>` 元素的 src 屬性引用文件中的另一個表達式樹，實現結構重用。[56]"
+  },
+  {
+    "user_input": "結構共享中的「循環限制」（Acyclicity Constraint）是指什麼？",
+    "response": "",
+    "contexts": "The occurrences of the share element must obey the following global acyclicity constraint: An element may not dominate itself. [57]",
+    "ground_truths": "指一個元素不能直接或間接地支配（引用）其自身，以防止形成無限循環的表達式樹。[57]"
+  },
+  {
+    "user_input": "內容標記中的 <cerror> 元素作用為何？",
+    "response": "",
+    "contexts": "A content error expression is made up of a csymbol followed by a sequence of zero or more MathML expressions... indicating the kind of error [and context]. [58]",
+    "ground_truths": "`<cerror>` 用於封裝內容錯誤，包含一個說明錯誤類型的符號以及發生錯誤的上下文信息。[58]"
+  },
+  {
+    "user_input": "什麼是「容器標記」（Container Markup）？請列舉例子。",
+    "response": "",
+    "contexts": "Many mathematical structures are constructed from subparts... this style of representation is called container markup. MathML provides container markup for sets, lists, intervals, vectors, matrices... [59], [60]",
+    "ground_truths": "容器標記是指用標記包裹其構成部分的結構，例如集合（set）、列表（list）、區間（interval）和矩陣（matrix）。[59], [60]"
+  },
+  {
+    "user_input": "限定符（Qualifiers）在內容標記中的排列順序為何？",
+    "response": "",
+    "contexts": "In all cases, if more than one qualifier is present, they appear in the order bvar, lowlimit, uplimit, interval, condition, domainofapplication, degree, momentabout, logbase. [61]",
+    "ground_truths": "順序固定為：bvar, lowlimit, uplimit, interval, condition, domainofapplication, degree, momentabout, logbase。[61]"
+  },
+  {
+    "user_input": "domainofapplication 限定符的作用是什麼？",
+    "response": "",
+    "contexts": "The most general qualifier is domainofapplication. It is used to specify a set (perhaps with additional structure...) over which an operation is to take place. [62]",
+    "ground_truths": "它是最通用的限定符，用於指定運算應用的集合或定義域。[62]"
+  },
+  {
+    "user_input": "degree 限定符通常與哪些運算符配合使用？",
+    "response": "",
+    "contexts": "MathML uses the degree element in this way in three contexts: to specify the degree of a root, a moment, and in various derivatives. [63]",
+    "ground_truths": "它通常用於指定根號的次數、矩（moment）的階數以及導數的階數。[63]"
+  },
+  {
+    "user_input": "如何區分 plus 與 sum 運算符？",
+    "response": "",
+    "contexts": "The plus element represents the addition operator... As an n-ary commutative operator, they can be used with qualifiers... however... the sum or product operators should be used [instead]. [64], [65]",
+    "ground_truths": "plus 用於明確列出項的加法；而 sum 通常建議與限定符配合使用，表示由特定規則定義的總和。[64], [65]"
+  },
+  {
+    "user_input": "selector 運算符的用途是什麼？",
+    "response": "",
+    "contexts": "The selector element is the operator for indexing into vectors, matrices and lists. [66]",
+    "ground_truths": "selector 是用於從向量、矩陣或列表中檢索元素的索引運算符。[66]"
+  },
+  {
+    "user_input": "如何表示邏輯上的「蘊含」（implies）關係？",
+    "response": "",
+    "contexts": "The implies element represents the logical implication function which takes two Boolean expressions as arguments. [67]",
+    "ground_truths": "使用 `<implies/>` 元素，它接受兩個布林表達式作為參數。[67]"
+  },
+  {
+    "user_input": "在內容標記中如何表示自然對數（Natural logarithm）？",
+    "response": "",
+    "contexts": "The ln element represents the natural logarithm function. [68]",
+    "ground_truths": "使用 `<ln/>` 元素表示自然對數。[68]"
+  },
+  {
+    "user_input": "MathML 4.0 新增的 intent 屬性的主要目的是什麼？",
+    "response": "",
+    "contexts": "MathML 4 adds a lightweight method for authors to express their intent: the intent attribute... It is primarily meant to help AT generate audio and/or braille renderings. [69], [70]",
+    "ground_truths": "intent 屬性提供了一種輕量級方法，讓作者能明確表達其意圖，主要用於輔助技術（AT）生成正確的語音或點字呈現。[69], [70]"
+  },
+  {
+    "user_input": "intent 屬性中以 \"_\" 開頭的名詞（如 _dollar_x）代表什麼？",
+    "response": "",
+    "contexts": "A literal is a name starting with “_”... These will never be included in an Intent Concept Dictionary. The reading of a literal is generated by replacing any -, _, . in the name by spaces. [71]",
+    "ground_truths": "代表一個「字面量」（literal），它不會存在於概念字典中，其讀音是透過將字串中的底線、橫線或點替換為空格後生成的短語。[71]"
+  },
+  {
+    "user_input": "意圖屬性（intent）中的 $name 語法是指什麼？",
+    "response": "",
+    "contexts": "An argument reference such as $name refers to a descendant element that has an attribute arg=\"name\". [72]",
+    "ground_truths": "這是一個參數引用，指向具有對應 `arg=\"name\"` 屬性的後代元素。[72]"
+  },
+  {
+    "user_input": "intent 屬性中的修飾符 :prefix 和 :infix 分別代表什麼含義？",
+    "response": "",
+    "contexts": ":prefix, :infix... refer to the spoken word order of the name and arguments, and not (necessarily) the order used in the displayed mathematical notation. [73]",
+    "ground_truths": "它們用於指定生成語音時的名詞與參數順序（如前綴或中綴式讀法），不一定代表公式的視覺顯示順序。[73]"
+  },
+  {
+    "user_input": "如果輔助技術（AT）遇到不支援的 intent 概念名，會如何處理？",
+    "response": "",
+    "contexts": "if the concept name... do not match... considered to be an unsupported concept... and will be treated the same as a literal; that is, the name is spoken as-is after normalizing. [74]",
+    "ground_truths": "它會被視為不支援的概念，並被當作「字面量」處理，即在名稱標準化處理後直接讀出。[74]"
+  },
+  {
+    "user_input": "semantics 元素中子元素的順序規則為何？",
+    "response": "",
+    "contexts": "The semantics element contains the expression being annotated as its first child, followed by a sequence of zero or more annotation and/or annotation-xml elements. [75]",
+    "ground_truths": "第一個子元素必須是被註釋的表達式，其後跟隨零個或多個 `<annotation>`（文字註釋）或 `<annotation-xml>`（結構化註釋）。[75]"
+  },
+  {
+    "user_input": "annotation 元素與 annotation-xml 元素的主要區別是什麼？",
+    "response": "",
+    "contexts": "The annotation element is the container for text annotations, and the annotation-xml element is used for structured annotations. [75]",
+    "ground_truths": "annotation 用於純文字形式的註釋，而 annotation-xml 用於結構化標記形式的註釋。[75]"
+  },
+  {
+    "user_input": "什麼是「註釋鍵」（Annotation keys）？MathML 預定義了哪些鍵？",
+    "response": "",
+    "contexts": "An annotation key specifies the relationship between an expression and an annotation... MathML provides two predefined annotation keys: alternate-representation and contentequiv. [76], [77]",
+    "ground_truths": "註釋鍵定義了表達式與註釋之間的關係。預定義鍵包括 \"alternate-representation\"（替代表示法）和 \"contentequiv\"（內容等效）。[76], [77]"
+  },
+  {
+    "user_input": "在 HTML5 中使用 annotation-xml 時，如果略過 encoding 屬性會發生什麼？",
+    "response": "",
+    "contexts": "If the encoding attribute is omitted then the expression is only valid if parsed as XML... [In HTML] the span element has caused all MathML elements to be prematurely closed. [78], [79]",
+    "ground_truths": "在 HTML 解析器下，若略過 encoding，內部的非 MathML 標記可能導致所有 MathML 元素被提前關閉，進而導致公式渲染失敗。[78], [79]"
+  },
+  {
+    "user_input": "什麼是「並行標記」（Parallel Markup）？",
+    "response": "",
+    "contexts": "Parallel markup is a way to combine two or more markup trees for the same mathematical expression. Parallel markup is achieved with the semantics element. [80]",
+    "ground_truths": "並行標記是指利用 semantics 元素將同一個數學表達式的多種標記樹（如呈現標記與內容標記）組合在一起。 [80]"
+  },
+  {
+    "user_input": "在並行標記中，如何建立對應結構之間的連結？",
+    "response": "",
+    "contexts": "These cross-references are established by the use of the id and xref attributes within a semantics element. [81]",
+    "ground_truths": "透過在 semantics 元素內使用 id 和 xref 屬性來建立跨分支的引用。[81]"
+  },
+  {
+    "user_input": "在 XML 環境下，如何宣告 MathML 命名空間？",
+    "response": "",
+    "contexts": "To declare a namespace when using the XML serialisation of MathML, one uses an xmlns attribute: <math xmlns=\"http://www.w3.org/1998/Math/MathML\">. [82]",
+    "ground_truths": "在 `<math>` 元素上使用 `xmlns=\"http://www.w3.org/1998/Math/MathML\"` 屬性。[82]"
+  },
+  {
+    "user_input": "MathML 與 CSS 結合時，為什麼需要謹慎使用？",
+    "response": "",
+    "contexts": "Because changing typographic properties of mathematics symbols can change the meaning of an equation, stylesheets should be written in a way such that changes to document-wide typographic styles do not affect embedded MathML. [83]",
+    "ground_truths": "因為改變數學符號的字體排印屬性可能會改變方程式的含義，因此必須確保全域樣式不會意外影響嵌入的 MathML 表達式意涵。[83]"
+  },
+  {
+    "user_input": "MathML 如何處理 Unicode 中的「非標記字元」（Non-Marking Characters）？",
+    "response": "",
+    "contexts": "They provide textual clues which can increase the quality of print rendering, permit correct audio rendering, and allow the unique recovery of mathematical semantics... Examples include FUNCTION APPLICATION (U+2061). [84]",
+    "ground_truths": "這些字元（如 U+2061 函數應用）雖然不可見，但能提供提升印刷質量、正確語音渲染及語義恢復所需的關鍵線索。[84]"
+  },
+  {
+    "user_input": "為什麼建議在數學公式中使用明確的腳標標記，而非直接使用 Unicode 偽腳標字元？",
+    "response": "",
+    "contexts": "In almost all mathematical contexts, pseudo-script characters should be associated with a base expression using explicit script markup... a problem arises with typesetting, when pseudo-scripts are used with subscripted identifiers [stacked]. [85], [86]",
+    "ground_truths": "使用明確標記（如 `<msup>`）能確保更好的排版效果（如避免上下標堆疊錯位），且能更準確地反映預期的數學結構。[85], [86]"
+  },
+  {
+    "user_input": "MathML 4.0 中對於「負數」標記的建議做法是什麼？",
+    "response": "",
+    "contexts": "Clarify that negative numbers should be marked up with an explicit mo operator in 3.2.4.4. [87]",
+    "ground_truths": "建議將負號作為一個顯式的 `<mo>` 運算符與數字分開標記，而非全部放在 `<mn>` 中。[87]"
+  },
+  {
+    "user_input": "什麼是 MathML-input-conformant 處理器？",
+    "response": "",
+    "contexts": "A MathML-input-conformant processor must accept all valid MathML expressions; it should appropriately translate all MathML expressions into application-specific form. [88]",
+    "ground_truths": "指必須能接受所有有效的 MathML 表達式，並將其正確轉換為該應用程式內部格式的處理器。[88]"
+  },
+  {
+    "user_input": "「Math Round-trip Conformance」的定義為何？",
+    "response": "",
+    "contexts": "A MathML-round-trip-conformant processor must preserve MathML equivalence. Two MathML expressions are “equivalent” if they have the same interpretation. [88]",
+    "ground_truths": "指在讀入與重新輸出過程中，必須保持 MathML 表達式的等效性（Equivalence）。[88]"
+  },
+  {
+    "user_input": "MathML 1/2 中的 fontfamily 屬性現在的狀態為何？",
+    "response": "",
+    "contexts": "The deprecated MathML 1 attributes... fontfamily... are removed in favor of mathvariant, mathsize, mathcolor and mathbackground. [87]",
+    "ground_truths": "它已被棄用並移除，應使用 `mathvariant`, `mathsize` 等屬性代替。[87]"
+  },
+  {
+    "user_input": "對於無障礙閱讀，為何建議使用 <mrow> 分組？",
+    "response": "",
+    "contexts": "Properly grouping sub-expressions using <mrow>... can simplify semantic interpretation of presentation elements by screen readers and text-to-speech applications. [89]",
+    "ground_truths": "正確的分組能優化間距與換行，並簡化螢幕閱讀器和語音合成軟體對符號語義的解讀。[89]"
+  },
+  {
+    "user_input": "輔助技術（AT）通常如何處理 <mphantom> 內容？",
+    "response": "",
+    "contexts": "Screen readers will not speak anything enclosed in an <mphantom> element; therefore, do not use <mphantom> in combination with an operator to create invisible operators. [90]",
+    "ground_truths": "螢幕閱讀器不會讀出 `<mphantom>` 內的任何內容，因此不建議用它來創建不可見的運算符。[90]"
+  },
+  {
+    "user_input": "在基礎數學排版中，如何表示借位或進位（Carries）？",
+    "response": "",
+    "contexts": "The mscarries element is used for various annotations such as carries, borrows, and crossouts that occur in elementary math. [91]",
+    "ground_truths": "使用 `<mscarries>` 元素來標註進位、借位或刪除線等信息。[91]"
+  },
+  {
+    "user_input": "MathML 規範中提到哪種方式可以用來表示「填空題」中的空格？",
+    "response": "",
+    "contexts": "Blanks in a “fill-in-the-blank” style... To indicate a blank, use the intent and arg attributes. [92]",
+    "ground_truths": "建議使用 `intent` 和 `arg` 屬性來標示空格的意圖。[92]"
+  },
+  {
+    "user_input": "在嚴謹內容標記中，複數如何編碼？",
+    "response": "",
+    "contexts": "Constructs using sep may be rewritten in Strict Content MathML as constructs using apply... [93] provides the table: complex-cartesian maps to complex_cartesian symbol. [52], [93]",
+    "ground_truths": "嚴謹模式下會將複數重寫為 `<apply>` 結構，並引用 `nums1` 字典中的 `complex_cartesian` 符號。[52], [93]"
+  },
+  {
+    "user_input": "在內容標記重寫規則中，對數函數 log 如果沒有指定 logbase 會發生什麼？",
+    "response": "",
+    "contexts": "When logbase is present, it determines the base. Otherwise, the default base of 10 must be explicitly provided in Strict markup. [94]",
+    "ground_truths": "在轉換為嚴謹模式時，必須顯式提供預設的基數 10。[94]"
+  },
+  {
+    "user_input": "如何透過 `aria-description` 提供額外的公式描述？",
+    "response": "",
+    "contexts": "It is appropriate to provide such descriptions using the ARIA 1.3 attribute aria-description... e.g., <mrow aria-description=\"circumference of a circle\">. [95], [96]",
+    "ground_truths": "可以將 `aria-description` 屬性放置在元素上（如 mrow），提供如「圓周率公式」等對閱讀器友好的文字描述。[95], [96]"
+  },
+  {
+    "user_input": "MathML 中的「不可見乘號」（InvisibleTimes）字元編碼是什麼？",
+    "response": "",
+    "contexts": "U+2062 INVISIBLE TIMES marks multiplication when it is understood without a mark. [97]",
+    "ground_truths": "其編碼為 U+2062。[97]"
+  },
+  {
+    "user_input": "當 `scriptevel` 變化時，字體大小如何計算？",
+    "response": "",
+    "contexts": "Whenever the scriptlevel is changed... the current font size is multiplied by the value of scriptsizemultiplier to the power of the change in scriptlevel. [98]",
+    "ground_truths": "當層級變化時，字體大小會乘以 `scriptsizemultiplier` 的（層級變化量）次方。[98]"
+  },
+  {
+    "user_input": "什麼是 `scriptminsize`？其預設值為何？",
+    "response": "",
+    "contexts": "changes to the font size due to scriptlevel changes should never reduce the size below scriptminsize... scriptminsize defaults to 8 points. [98]",
+    "ground_truths": "它定義了層級變化所能縮小的最小字體限制，預設值為 8 點（8pt）。[98]"
+  },
+  {
+    "user_input": "在 `mtable` 中，`rowspacing` 屬性支援多個值嗎？",
+    "response": "",
+    "contexts": "rowspacingnot-core (length) + 1.0ex specifies how much space to add between rows. (See the note below about multiple values.) [99]",
+    "ground_truths": "支援。如果提供多個值，它們會依次應用於行與行之間的間隙。[99]"
+  },
+  {
+    "user_input": "內容標記中的 `<csymbol>` 優先級：`cd` 與 `definitionURL` 同時存在時誰優先？",
+    "response": "",
+    "contexts": "when both a cd and a definitionURL attribute are specified on a single csymbol, the cd attribute takes precedence. [100]",
+    "ground_truths": "`cd` 屬性的優先級高於 `definitionURL`。[100]"
+  },
+  {
+    "user_input": "如何表示整數除法的「商」（quotient）？",
+    "response": "",
+    "contexts": "The quotient element represents the integer division operator. [101]",
+    "ground_truths": "使用 `<quotient/>` 元素表示。[101]"
+  },
+  {
+    "user_input": "MathML 4 移除 `mlabeledtr` 元素後，建議如何處理公式編號？",
+    "response": "",
+    "contexts": "This element... is not specified in the current version... problems can be addressed by the use of style sheets [CSS counters]. [48], [102]",
+    "ground_truths": "該元素已被移除，現在建議透過 CSS 或樣式表（如 CSS 計數器）來處理自動編號問題。[48], [102]"
+  },
+  {
+    "user_input": "意圖屬性（intent）中的 `:silent` 修飾符有什麼作用？",
+    "response": "",
+    "contexts": "f :silent ($x,$y) : “x y”... request that the reading of the name may be suppressed. [73], [103]",
+    "ground_truths": "它要求輔助技術抑制（不讀出）函數名稱，僅讀出其參數內容。[73], [103]"
+  },
+  {
+    "user_input": "在 `menclose` 中，取值 \"actuarial\" 會渲染出什麼效果？",
+    "response": "",
+    "contexts": "When notation is specified as actuarial, the contents are drawn enclosed by an actuarial symbol. [104]",
+    "ground_truths": "會渲染出精算符號（通常是頂部與右側的線條）。[104]"
+  },
+  {
+    "user_input": "內容標記中的 `<bind>` 元素第一個子元素必須是什麼？",
+    "response": "",
+    "contexts": "Binding expressions are represented as MathML expression trees using the bind element. Its first child is a MathML expression that represents a binding operator. [105]",
+    "ground_truths": "第一個子元素必須是代表「綁定運算符」（如積分或全稱量詞）的表達式。[105]"
+  },
+  {
+    "user_input": "什麼是 `alpha-conversion`？在 MathML 中如何應用？",
+    "response": "",
+    "contexts": "It is a defining property of bound variables that they can be renamed consistently... This operation, sometimes known as α-conversion, preserves the semantics. [106]",
+    "ground_truths": "這是一種在不改變語義的前提下，一致性地重新命名綁定變數的操作。[106]"
+  },
+  {
+    "user_input": "如何表示矩陣的「轉置」（transpose）？",
+    "response": "",
+    "contexts": "The transpose element represents a unary function that signifies the transpose of the given matrix or vector. [107]",
+    "ground_truths": "使用內容標記中的 `<transpose/>` 元素。[107]"
+  },
+  {
+    "user_input": "MathML 規範提到哪些「特殊字元」應該在標識符（mi）中使用以區分語義？",
+    "response": "",
+    "contexts": "U+2146, U+2147 and U+2148 represent differential d, exponential e and imaginary i... semantically distinct from simple variables. [108]",
+    "ground_truths": "應使用特殊的 Unicode 字元代表微分 d (U+2146)、指數 e (U+2147) 和虛數 i (U+2148)，以區分它們與普通變數。[108]"
+  },
+  {
+    "user_input": "MathML 3 中的 `other` 屬性在 MathML 4 中的狀態？",
+    "response": "",
+    "contexts": "The other attribute has been removed in MathML 4.0... From MathML 4.0 onwards, a data-* attribute could be used. [109], [110]",
+    "ground_truths": "已在 MathML 4.0 中移除，改為建議使用 `data-*` 屬性來傳遞非標準數據。[109], [110]"
+  },
+  {
+    "user_input": "在 `mpadded` 中使用負值的 `lspace` 會產生什麼效果？",
+    "response": "",
+    "contexts": "Negative values for the lspace attributes reduce the space between the preceding content and the child content, and may cause overprinting. [111]",
+    "ground_truths": "會縮小與前一個內容的間距，甚至可能導致與前方內容重疊。[111]"
+  }
+]
